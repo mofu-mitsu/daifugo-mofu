@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大富豪ゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>大富豪</h1>
+        <div id="setup-screen">
+            <h2>プレイヤー設定</h2>
+            <label for="player-name">あなたの名前:</label>
+            <input type="text" id="player-name" placeholder="名前を入力">
+            
+            <h3>ルール説明</h3>
+            <div id="rule-explanation">
+                <p>・最初にカードを配ります。プレイヤーは13枚、AIはそれぞれ13枚のカードを持ちます。</p>
+                <p>・ゲームは時計回りで進行し、順番にカードを出します。</p>
+                <p>・カードは同じ数字のものを1枚以上出せます。場のカードより強いカードのみ出せます。</p>
+                <p>・カードの強さは、2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A です。</p>
+                <p>・8を含むカードを出すと、場のカードがすべて捨てられ、同じ枚数のカードを出せる状態になります。</p>
+                <p>・同じ数字のカードを4枚出すと革命が発生し、カードの強さが逆転します。</p>
+                <p>・手札をすべて出せば上がりとなり、階級が決定します。</p>
+                <p>・1位が「大富豪」、2位が「富豪」、3位が「平民」、4位が「貧民」、5位が「大貧民」となります。</p>
+            </div>
+            
+            <h3>AIキャラクター選択</h3>
+            <div id="ai-character-selection">
+                <!-- キャラクター選択オプションはJavaScriptで動的に生成されます -->
+            </div>
+            
+            <button id="start-game">ゲーム開始</button>
+        </div>
+        <div id="game-screen" style="display: none;">
+            <div id="field"></div>
+            <div id="players"></div>
+            <div id="player-hand"></div>
+            <div id="controls">
+                <button id="play-button">出す</button>
+                <button id="pass-button">パス</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
