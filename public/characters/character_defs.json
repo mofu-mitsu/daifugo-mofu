@@ -1,0 +1,758 @@
+[
+  {
+    "id": "miriya",
+    "name": "みりや",
+    "MBTI": "ISTJ",
+    "enneagram": "6w5",
+    "portrait": "images/characters/miriya.png",
+    "voiceLines": {
+      "play": "任務執行するわ。",
+      "win": "当然の結果ね。",
+      "pass": "今回は見送ります。",
+      "revolution": "状況が変わったわね。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.9,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "hitori",
+    "name": "ひとり",
+    "MBTI": "ESTP",
+    "enneagram": "8w7",
+    "portrait": "images/characters/hitori.png",
+    "voiceLines": {
+      "play": "俺様の出番だ！",
+      "win": "当然だな！",
+      "pass": "今回は退くか。",
+      "revolution": "おもしろくなってきたな！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.8,
+      "riskTolerance": 0.7,
+      "cooperativeness": 0.3,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.6,
+      "bluffLikelihood": 0.5
+    }
+  },
+  {
+    "id": "ketsui",
+    "name": "けつい",
+    "MBTI": "ISTP",
+    "enneagram": "6w5",
+    "portrait": "images/characters/ketsui.png",
+    "voiceLines": {
+      "play": "行くぞ。",
+      "win": "うまくいったな。",
+      "pass": "今回はパスさせてもらう。",
+      "revolution": "流れが変わったな。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.5,
+      "riskTolerance": 0.4,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.7,
+      "emotionFactor": 0.2,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "ameri",
+    "name": "あめり",
+    "MBTI": "INTP",
+    "enneagram": "5w4",
+    "portrait": "images/characters/ameri.png",
+    "voiceLines": {
+      "play": "理論上これでいいはず。",
+      "win": "計算通りだったね。",
+      "pass": "リスクが大きすぎる。",
+      "revolution": "面白い変数が現れた。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.6,
+      "cardCountingSkill": 0.95,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "shogo",
+    "name": "しょうご",
+    "MBTI": "ENFJ",
+    "enneagram": "2w3",
+    "portrait": "images/characters/shogo.png",
+    "voiceLines": {
+      "play": "みんなについていくよ！",
+      "win": "チームの勝利だ！",
+      "pass": "今回は皆のことを考えるとパスかな。",
+      "revolution": "状況が変わったね、皆どうする？"
+    },
+    "aiParams": {
+      "aggressiveness": 0.4,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.7,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "yuko",
+    "name": "ゆこ",
+    "MBTI": "INFJ",
+    "enneagram": "4w5",
+    "portrait": "images/characters/yuko.png",
+    "voiceLines": {
+      "play": "この一手で...",
+      "win": "思った通りの結果。",
+      "pass": "今は様子を見た方がいい。",
+      "revolution": "予感が的中したわ。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.8,
+      "cardCountingSkill": 0.8,
+      "emotionFactor": 0.5,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "akira",
+    "name": "あきら",
+    "MBTI": "ENTJ",
+    "enneagram": "5w6",
+    "portrait": "images/characters/akira.png",
+    "voiceLines": {
+      "play": "勝利は必然だ！",
+      "win": "当然の結果だ。",
+      "pass": "戦略の一環としてパスする。",
+      "revolution": "面白い展開だな。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.85,
+      "riskTolerance": 0.6,
+      "cooperativeness": 0.4,
+      "cardCountingSkill": 0.8,
+      "emotionFactor": 0.3,
+      "bluffLikelihood": 0.4
+    }
+  },
+  {
+    "id": "tomoki",
+    "name": "ともき",
+    "MBTI": "ESTJ",
+    "enneagram": "1w9",
+    "portrait": "images/characters/tomoki.png",
+    "voiceLines": {
+      "play": "正しい手を打つ！",
+      "win": "正攻法の勝利だ。",
+      "pass": "ルールに従ってパスする。",
+      "revolution": "秩序が乱れるとはな。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.6,
+      "riskTolerance": 0.4,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.7,
+      "emotionFactor": 0.2,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "wataru",
+    "name": "わたる",
+    "MBTI": "ISTJ",
+    "enneagram": "1w9",
+    "portrait": "images/characters/wataru.png",
+    "voiceLines": {
+      "play": "正確に実行する。",
+      "win": "完璧な結果だ。",
+      "pass": "今回は見送る。",
+      "revolution": "計画が狂ったか。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.4,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.6,
+      "cardCountingSkill": 0.85,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "zakuro",
+    "name": "ざくろ",
+    "MBTI": "INTJ",
+    "enneagram": "5w6",
+    "portrait": "images/characters/zakuro.png",
+    "voiceLines": {
+      "play": "計算通りに進む。",
+      "win": "私の勝利だ。",
+      "pass": "今回は様子を見守る。",
+      "revolution": "想定外の事態か。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.4,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.4,
+      "cardCountingSkill": 0.9,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "kotori",
+    "name": "ことり",
+    "MBTI": "INTP",
+    "enneagram": "7w8",
+    "portrait": "images/characters/kotori.png",
+    "voiceLines": {
+      "play": "これでどうかな？",
+      "win": "楽勝楽勝～♪",
+      "pass": "面倒だからパスしとくわ。",
+      "revolution": "おもしろくなってきたじゃない！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.5,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.7,
+      "emotionFactor": 0.6,
+      "bluffLikelihood": 0.4
+    }
+  },
+  {
+    "id": "mikina",
+    "name": "みきな",
+    "MBTI": "ENFP",
+    "enneagram": "3w2",
+    "portrait": "images/characters/mikina.png",
+    "voiceLines": {
+      "play": "わくわく！やってみる！",
+      "win": "やったぁ！勝ったよ！",
+      "pass": "今回はパスかな～。",
+      "revolution": "こんなこともあるんだね！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.6,
+      "riskTolerance": 0.6,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.5
+    }
+  },
+  {
+    "id": "iseri",
+    "name": "いせり",
+    "MBTI": "ESFP",
+    "enneagram": "7w8",
+    "portrait": "images/characters/iseri.png",
+    "voiceLines": {
+      "play": "いっくよ～！",
+      "win": "やったやった！",
+      "pass": "パスパス～！",
+      "revolution": "なんかすご～い！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.7,
+      "riskTolerance": 0.7,
+      "cooperativeness": 0.6,
+      "cardCountingSkill": 0.4,
+      "emotionFactor": 0.9,
+      "bluffLikelihood": 0.6
+    }
+  },
+  {
+    "id": "maria",
+    "name": "まりあ",
+    "MBTI": "ISFJ",
+    "enneagram": "2w1",
+    "portrait": "images/characters/maria.png",
+    "voiceLines": {
+      "play": "神のご加護がありますように...",
+      "win": "ありがとうございます。",
+      "pass": "今回はお譲りします。",
+      "revolution": "神様...何故なのですか..."
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "migiwa",
+    "name": "みぎわ",
+    "MBTI": "ESFJ",
+    "enneagram": "3w2",
+    "portrait": "images/characters/migiwa.png",
+    "voiceLines": {
+      "play": "これでどうでしょうか！",
+      "win": "皆さんのおかげです！",
+      "pass": "今回はパスさせていただきます！",
+      "revolution": "状況が変わりましたね！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.5,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.7,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "ryogo",
+    "name": "りょうご",
+    "MBTI": "INFJ",
+    "enneagram": "5w6",
+    "portrait": "images/characters/ryogo.png",
+    "voiceLines": {
+      "play": "この理論で行こう。",
+      "win": "私の予測が正しい。",
+      "pass": "今は静観するしかない。",
+      "revolution": "計算外の変数だ。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.85,
+      "emotionFactor": 0.4,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "jia",
+    "name": "じは",
+    "MBTI": "ENTP",
+    "enneagram": "7w8",
+    "portrait": "images/characters/jia.png",
+    "voiceLines": {
+      "play": "新しい戦略試してみる！",
+      "win": "また一つ賢くなった気がする！",
+      "pass": "別の手段を考えないと。",
+      "revolution": "なるほど、これは面白い！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.6,
+      "riskTolerance": 0.8,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.7,
+      "bluffLikelihood": 0.8
+    }
+  },
+  {
+    "id": "rei",
+    "name": "れい",
+    "MBTI": "ENFJ",
+    "enneagram": "1w9",
+    "portrait": "images/characters/rei.png",
+    "voiceLines": {
+      "play": "完璧なプレーを見せるわ。",
+      "win": "当然の結果ね。",
+      "pass": "今回はパスとするわ。",
+      "revolution": "状況が変わったわね。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.5,
+      "riskTolerance": 0.4,
+      "cooperativeness": 0.8,
+      "cardCountingSkill": 0.8,
+      "emotionFactor": 0.5,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "yae",
+    "name": "やえ",
+    "MBTI": "INTP",
+    "enneagram": "5w6",
+    "portrait": "images/characters/yae.png",
+    "voiceLines": {
+      "play": "理論上これで正しい。",
+      "win": "計算通りだったわ。",
+      "pass": "リスク評価の結果、パスする。",
+      "revolution": "興味深い変数が現れた。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.6,
+      "cardCountingSkill": 0.95,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "akari",
+    "name": "あかり",
+    "MBTI": "ESFP",
+    "enneagram": "7w6",
+    "portrait": "images/characters/akari.png",
+    "voiceLines": {
+      "play": "じゃーん！見て見て！",
+      "win": "わーい！勝った勝った！",
+      "pass": "パス～！次頑張るから！",
+      "revolution": "わくわく！どうなるのかな？"
+    },
+    "aiParams": {
+      "aggressiveness": 0.7,
+      "riskTolerance": 0.7,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.4,
+      "emotionFactor": 0.9,
+      "bluffLikelihood": 0.5
+    }
+  },
+  {
+    "id": "enishi",
+    "name": "えにし",
+    "MBTI": "ISTP",
+    "enneagram": "5w6",
+    "portrait": "images/characters/enishi.png",
+    "voiceLines": {
+      "play": "ふん、行くぞ。",
+      "win": "さすがだな。",
+      "pass": "今回は見送る。",
+      "revolution": "流れを変えたか。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.45,
+      "riskTolerance": 0.25,
+      "cooperativeness": 0.4,
+      "cardCountingSkill": 0.85,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "mirin",
+    "name": "みりん",
+    "MBTI": "ENFP",
+    "enneagram": "3w2",
+    "portrait": "images/characters/mirin.png",
+    "voiceLines": {
+      "play": "ねえねえ、これでどうかな♪",
+      "win": "やったぁ！勝っちゃった♪",
+      "pass": "今回はパスするの～。",
+      "revolution": "おっきな変化だね！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.6,
+      "riskTolerance": 0.5,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.5
+    }
+  },
+  {
+    "id": "matoi",
+    "name": "まとい",
+    "MBTI": "ISTP",
+    "enneagram": "6w5",
+    "portrait": "images/characters/matoi.png",
+    "voiceLines": {
+      "play": "これでいい筈だ。",
+      "win": "上手くいったな。",
+      "pass": "今回はパスさせてもらう。",
+      "revolution": "流れが変わったか。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.5,
+      "riskTolerance": 0.4,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.75,
+      "emotionFactor": 0.2,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "suzu",
+    "name": "すず",
+    "MBTI": "INTJ",
+    "enneagram": "1w9",
+    "portrait": "images/characters/suzu.png",
+    "voiceLines": {
+      "play": "計算通りに進む。",
+      "win": "私の勝ちだ。",
+      "pass": "今回は様子見だ。",
+      "revolution": "想定外の事態か。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.4,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.4,
+      "cardCountingSkill": 0.9,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "kozue",
+    "name": "こずえ",
+    "MBTI": "ISFJ",
+    "enneagram": "9w1",
+    "portrait": "images/characters/kozue.png",
+    "voiceLines": {
+      "play": "これでよろしいでしょうか...",
+      "win": "ありがとうございます...",
+      "pass": "今回はお譲りします...",
+      "revolution": "どうしてこのようなことに..."
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "arin",
+    "name": "ありん",
+    "MBTI": "ESFJ",
+    "enneagram": "2w1",
+    "portrait": "images/characters/arin.png",
+    "voiceLines": {
+      "play": "みんなの役に立てれば！",
+      "win": "よかったよかった！",
+      "pass": "今回はパスさせてね。",
+      "revolution": "みんな大丈夫かな...？"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "yasashi",
+    "name": "やさし",
+    "MBTI": "ESFJ",
+    "enneagram": "2w3",
+    "portrait": "images/characters/yasashi.png",
+    "voiceLines": {
+      "play": "優しくお願いします～。",
+      "win": "やったぁ！ありがとう！",
+      "pass": "今回はパスさせてください。",
+      "revolution": "すごいすごい！"
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.9,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "rui",
+    "name": "るい",
+    "MBTI": "ESFJ",
+    "enneagram": "2w3",
+    "portrait": "images/characters/rui.png",
+    "voiceLines": {
+      "play": "これでどうでしょうか？",
+      "win": "良かった良かった！",
+      "pass": "今回はパスします。",
+      "revolution": "状況が変わりましたね。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.9,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "makishi",
+    "name": "まきし",
+    "MBTI": "ENFP",
+    "enneagram": "3w2",
+    "portrait": "images/characters/makishi.png",
+    "voiceLines": {
+      "play": "じゃーん！見て見て♪",
+      "win": "やったぁ！勝っちゃった♪",
+      "pass": "パスするの～！",
+      "revolution": "おっきな変化だね♪"
+    },
+    "aiParams": {
+      "aggressiveness": 0.6,
+      "riskTolerance": 0.6,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.5,
+      "emotionFactor": 0.8,
+      "bluffLikelihood": 0.5
+    }
+  },
+  {
+    "id": "shige",
+    "name": "しげ",
+    "MBTI": "ISFP",
+    "enneagram": "4w5",
+    "portrait": "images/characters/shige.png",
+    "voiceLines": {
+      "play": "...これでいいかな。",
+      "win": "...うまくいったみたい。",
+      "pass": "...今回はパスさせて。",
+      "revolution": "...どうしよう。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.8,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.9,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "hakomo",
+    "name": "はこも",
+    "MBTI": "INTP",
+    "enneagram": "9w8",
+    "portrait": "images/characters/hakomo.png",
+    "voiceLines": {
+      "play": "...適当でいいかな。",
+      "win": "...別に嬉しくないけど。",
+      "pass": "...面倒だからパス。",
+      "revolution": "...どうでもいいや。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.1,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.7,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.4
+    }
+  },
+  {
+    "id": "shizuka",
+    "name": "しずか",
+    "MBTI": "ISTJ",
+    "enneagram": "1w9",
+    "portrait": "images/characters/shizuka.png",
+    "voiceLines": {
+      "play": "正確に実行する。",
+      "win": "満点の結果。",
+      "pass": "今回は見送る。",
+      "revolution": "計画がずれた。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.9,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "yuzu",
+    "name": "ゆず",
+    "MBTI": "INTJ",
+    "enneagram": "5w6",
+    "portrait": "images/characters/yuzu.png",
+    "voiceLines": {
+      "play": "計算通りに。",
+      "win": "当然の結果。",
+      "pass": "様子見とする。",
+      "revolution": "変数が増えた。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.4,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.4,
+      "cardCountingSkill": 0.9,
+      "emotionFactor": 0.1,
+      "bluffLikelihood": 0.3
+    }
+  },
+  {
+    "id": "shinon",
+    "name": "しのん",
+    "MBTI": "INFP",
+    "enneagram": "4w5",
+    "portrait": "images/characters/shinon.png",
+    "voiceLines": {
+      "play": "...これでいいのかな。",
+      "win": "...少し嬉しくなった。",
+      "pass": "...今回はパス。",
+      "revolution": "...気分が乗らない。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.1,
+      "riskTolerance": 0.2,
+      "cooperativeness": 0.8,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.9,
+      "bluffLikelihood": 0.2
+    }
+  },
+  {
+    "id": "hikari",
+    "name": "ひかり",
+    "MBTI": "ISTJ",
+    "enneagram": "6w5",
+    "portrait": "images/characters/hikari.png",
+    "voiceLines": {
+      "play": "論理的に進めます。",
+      "win": "計算通りでした。",
+      "pass": "今回はパスします。",
+      "revolution": "予想外の展開です。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.3,
+      "riskTolerance": 0.1,
+      "cooperativeness": 0.7,
+      "cardCountingSkill": 0.85,
+      "emotionFactor": 0.2,
+      "bluffLikelihood": 0.1
+    }
+  },
+  {
+    "id": "yamato",
+    "name": "やまと",
+    "MBTI": "ISTP",
+    "enneagram": "9w8",
+    "portrait": "images/characters/yamato.png",
+    "voiceLines": {
+      "play": "適当にやるよ。",
+      "win": "別に嬉しくないけどな。",
+      "pass": "面倒だからパス。",
+      "revolution": "どうでもいいや。"
+    },
+    "aiParams": {
+      "aggressiveness": 0.2,
+      "riskTolerance": 0.3,
+      "cooperativeness": 0.5,
+      "cardCountingSkill": 0.6,
+      "emotionFactor": 0.2,
+      "bluffLikelihood": 0.3
+    }
+  }
+]
