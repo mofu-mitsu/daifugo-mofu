@@ -1,38 +1,66 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大富豪ゲーム</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>とりの丘トリズ大富豪</title>
+
+  <!-- 基本メタ -->
+  <meta name="description" content="みりんてゃとクラスメイト達が賑やかに戦う、とりの丘学園の大富豪ゲーム！キャラセリフ付き・都落ちや献上ルール対応。">
+  <meta name="theme-color" content="#ffb6d5">
+
+  <!-- favicon -->
+  <link rel="icon" href="/assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+
+  <!-- OGP -->
+  <meta property="og:title" content="とりの丘トリズ大富豪">
+  <meta property="og:description" content="みりんてゃ達と対戦！キャラの掛け合いが楽しい学園大富豪。都落ち／献上にも対応。">
+  <meta property="og:image" content="https://example.com/assets/ogp/ogp_v1.png">
+  <meta property="og:url" content="https://example.com/game/">
+  <meta property="og:type" content="game">
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="とりの丘トリズ大富豪">
+  <meta name="twitter:description" content="みりんてゃと対戦して学園のトップを目指そう！">
+  <meta name="twitter:image" content="https://example.com/assets/ogp/ogp_v1.png">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
         <h1>大富豪</h1>
-        <div id="setup-screen">
-            <h2>プレイヤー設定</h2>
+    <!-- setup-screen の中身を少し変更 -->
+    <div id="setup-screen">
+        <h2>プレイヤー設定</h2>
+        
+        <div class="input-group">
             <label for="player-name">あなたの名前:</label>
             <input type="text" id="player-name" placeholder="名前を入力">
-            
-            <h3>ルール説明</h3>
-            <div id="rule-explanation">
-                <p>・最初にカードを配ります。プレイヤーは13枚、AIはそれぞれ13枚のカードを持ちます。</p>
-                <p>・ゲームは時計回りで進行し、順番にカードを出します。</p>
-                <p>・カードは同じ数字のものを1枚以上出せます。場のカードより強いカードのみ出せます。</p>
-                <p>・カードの強さは、2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A です。</p>
-                <p>・8を含むカードを出すと、場のカードがすべて捨てられ、同じ枚数のカードを出せる状態になります。</p>
-                <p>・同じ数字のカードを4枚出すと革命が発生し、カードの強さが逆転します。</p>
-                <p>・手札をすべて出せば上がりとなり、階級が決定します。</p>
-                <p>・1位が「大富豪」、2位が「富豪」、3位が「平民」、4位が「貧民」、5位が「大貧民」となります。</p>
-            </div>
-            
-            <h3>AIキャラクター選択</h3>
-            <div id="ai-character-selection">
-                <!-- キャラクター選択オプションはJavaScriptで動的に生成されます -->
-            </div>
-            
-            <button id="start-game">ゲーム開始</button>
         </div>
+
+        <div class="input-group">
+            <label for="player-image">あなたのアイコン:</label>
+            <input type="file" id="player-image" accept="image/*">
+        </div>
+        
+        <button id="show-rules">ルール説明</button>
+        
+        <h3>ゲームモード選択</h3>
+        <!-- ▼ ボタンを並べるコンテナを追加 ▼ -->
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button id="select-characters-btn">対戦相手を選ぶ (通常)</button>
+            <button id="spectator-mode-btn" style="background: linear-gradient(45deg, #FF9800, #F44336);">観戦モードで選ぶ</button>
+        </div>
+
+        <!-- 選択中の表示エリア -->
+        <div id="ai-character-selection" style="margin-top: 15px;">
+            <p id="selection-status">まだ選択されていません</p>
+        </div>
+        
+        <button id="start-game">ゲーム開始</button>
+    </div>
         <div id="game-screen" style="display: none;">
             <div id="field"></div>
             <div id="players"></div>
@@ -43,6 +71,70 @@
             </div>
         </div>
     </div>
+    
+    <!-- ルール説明モーダル -->
+    <div id="rules-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>ルール説明</h2>
+            <div id="rule-explanation">
+                <p>・最初にカードを配ります。プレイヤーは13枚、AIはそれぞれ13枚のカードを持ちます。</p>
+                <p>・ゲームは時計回りで進行し、順番にカードを出します。</p>
+                <p>・カードは同じ数字のものを1枚以上出せます。場のカードより強いカードのみ出せます。</p>
+                <p>・カードの強さは、2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A です。</p>
+                <p>・8を含むカードを出すと、場のカードがすべて捨てられ、同じ枚数のカードを出せる状態になります。</p>
+                <p>・同じ数字のカードを4枚出すと革命が発生し、カードの強さが逆転します。</p>
+                <p>・手札をすべて出せば上がりとなり、階級が決定します。</p>
+                <p>・1位が「大富豪」、2位が「富豪」、3位が「貧民」、4位が「大貧民」となります。</p>
+            </div>
+        </div>
+    </div>
+    <!-- キャラクター選択モーダル -->
+    <div id="character-modal" class="modal">
+        <div class="modal-content character-modal-content">
+            <span class="close" id="close-character-modal">&times;</span>
+            <h2>キャラクターを選択</h2>
+            <div class="character-grid" id="character-grid">
+                <!-- キャラクター一覧はJavaScriptで動的に生成 -->
+            </div>
+            <div class="character-details" id="character-details">
+                <h3>キャラクタープロフィール</h3>
+                <div class="character-portrait">
+                    <img id="character-portrait" src="" alt="キャラクター画像">
+                </div>
+                <div class="character-info">
+                    <h4 id="character-name">名前: -</h4>
+                    <p id="character-mbti">MBTI: -</p>
+                    <p id="character-enneagram">エニアグラム: -</p>
+                    <p id="character-description">説明: -</p>
+                </div>
+            </div>
+            <div class="selected-characters" id="selected-characters">
+                <h3>選択されたキャラクター</h3>
+                <div id="selected-characters-list"></div>
+                <button id="confirm-selection" class="confirm-btn">選択を確定</button>
+            </div>
+        </div>
+    </div>
+    <!-- ゲーム内通知（トースト） -->
+    <div id="game-notification"></div>
+
+    <!-- リザルト（結果発表）モーダル -->
+    <div id="result-modal" class="modal">
+        <div class="modal-content result-content">
+            <h2>ゲーム終了！</h2>
+            <div id="result-list">
+                <!-- ここに順位が入る -->
+            </div>
+            <div class="result-buttons">
+                <button id="next-round-button">同じメンバーで次へ</button>
+                <button id="title-button">タイトルに戻る</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ↓ここを data から defs に変える！ -->
+    <script src="public/characters/character_defs.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
