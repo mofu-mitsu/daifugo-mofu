@@ -346,7 +346,6 @@ function renderCharacterGrid() {
         characterGrid.appendChild(header);
 
         const gridContainer = document.createElement('div');
-        // ★修正: インラインスタイルをやめてクラスを付与（CSSで制御するため）
         gridContainer.className = 'character-section-grid';
         
         ids.forEach(id => {
@@ -362,8 +361,15 @@ function renderCharacterGrid() {
             const fallbackAvatar = `<div class="fallback-avatar" style="width:80px;height:80px;border-radius:50%;background:#eee;display:none;margin:0 auto 10px;line-height:80px;font-size:30px;color:#aaa;align-items:center;justify-content:center;">${charData.name.charAt(0)}</div>`;
 
             card.innerHTML = `${imgTag}${fallbackAvatar}<div style="font-weight:bold;">${charData.name}</div><div style="font-size:0.8em;color:#666;">${charData.MBTI}</div>`;
-            card.onclick = () => toggleCharacterSelection(id, card);
-            card.onmouseenter = () => showCharacterDetails(charData);
+            
+            // ★修正: クリックした時だけ選択＆プロフ表示にする（マウスオーバー削除）
+            card.onclick = () => {
+                toggleCharacterSelection(id, card);
+                showCharacterDetails(charData); // クリック時に詳細表示
+            };
+            
+            // card.onmouseenter = ... は削除！
+            
             gridContainer.appendChild(card);
         });
         characterGrid.appendChild(gridContainer);
