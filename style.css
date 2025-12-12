@@ -186,11 +186,7 @@ button:active { transform: translateY(-2px); }
     display: none; position: fixed; z-index: 3000; left: 0; top: 0;
     width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
-    
-    /* PCではしっかり中央寄せ */
-    justify-content: center; 
-    align-items: center; 
-    
+    justify-content: center; align-items: center;
     overflow: hidden; 
 }
 body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; } 
@@ -204,7 +200,7 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
     box-shadow: var(--shadow-strong); position: relative;
     border: 1px solid white; animation: slideDown 0.4s ease;
     
-    /* 中身のスクロール許可 */
+    /* スクロール設定 */
     overflow-y: auto; display: block; 
     scrollbar-width: thin; scrollbar-color: #cbaaca #f1f1f1;
 }
@@ -215,7 +211,6 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
 .close {
     color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer;
     transition: color 0.3s; 
-    /* ★BGMボタンと反対側に配置 */
     position: absolute; left: 20px; top: 15px; z-index: 20000;
 }
 .close:hover { color: #ff6b6b; }
@@ -275,7 +270,7 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
 /* ★矢印ボタン（PC版：左下） */
 #modal-jump-btn {
     position: fixed; 
-    bottom: 30px; left: 30px; /* デフォルトは左下 */
+    bottom: 30px; left: 30px; 
     z-index: 2147483647; 
     width: 60px; height: 60px; border-radius: 50%;
     background: var(--accent-color); color: white; font-size: 1.5rem;
@@ -322,16 +317,16 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
     
     .character-details { flex-direction: column; text-align: center; }
     
-    /* ★モーダル全体の設定を上書き（上詰め） */
+    /* モーダルを上詰めにする */
     .modal {
-        align-items: flex-start !important; /* 中央寄せを解除して上から */
+        align-items: flex-start !important; 
         padding: 0 !important;
     }
 
-    /* ★白い箱を画面いっぱいに */
+    /* 白い箱を全画面化（100dvhでアドレスバー対策） */
     .modal-content, .character-modal-content {
         width: 100% !important; 
-        height: 100vh !important; /* 高さ100%強制 */
+        height: 100dvh !important; /* height: 100vh ではなく 100dvh */
         max-width: none !important;
         max-height: none !important;
         margin: 0 !important;
@@ -340,10 +335,10 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
         /* 画面の左上にくっつける */
         top: 0; left: 0;
         
-        /* 上部に余白（BGMボタン回避） */
+        /* 余白調整：上はBGMボタン回避、下は中身が見切れないように */
         padding-top: 80px !important; 
+        padding-bottom: 50px !important;
         
-        /* アニメーションなし */
         animation: none;
     }
     
@@ -353,17 +348,16 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; height: 100%; 
         gap: 10px;
     }
     
-    /* ★矢印ボタンを右上のBGMボタンの下に配置 */
+    /* ★矢印ボタン（スマホ：右上のBGMボタンの下に配置！） */
     #modal-jump-btn { 
-        bottom: auto !important; /* 下基準解除 */
-        left: auto !important;   /* 左基準解除 */
+        bottom: auto !important; /* 下固定を解除 */
+        left: auto !important;   /* 左固定を解除 */
         
-        top: 90px !important;    /* 上から90px（BGMボタンの下） */
-        right: 20px !important;  /* 右から20px */
+        top: 100px !important;   /* BGMボタン(20px+50px)の下あたり */
+        right: 20px !important;  /* 右側に配置 */
         
         width: 50px !important;
         height: 50px !important;
-        font-size: 1.2rem !important;
     }
     
     .result-row { flex-direction: column; text-align: center; padding: 10px; }
