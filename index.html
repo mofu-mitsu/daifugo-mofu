@@ -30,8 +30,23 @@
   <meta property="twitter:description" content="みりんてゃと対戦して学園のトップを目指す大富豪！観戦モードあり。">
   <meta property="twitter:image" content="https://daifugo-mofu.vercel.app/ogp.png">
 
-  <!-- CSS（先頭の / を削除） -->
+  <!-- ★追加: Font Awesome（アイコン用） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ★追加: BGM切り替えボタン（右上に配置） -->
+    <button id="bgm-toggle" class="bgm-btn">
+        <i class="fa-solid fa-volume-xmark"></i>
+    </button>
+    
+    <!-- ★追加: オーディオタグ（ファイル名は daifugoBGM.ogg） -->
+    <!-- loop属性でループ再生、初期音量はJSで制御 -->
+    <audio id="bgm-audio" src="daifugoBGM.ogg" loop preload="auto"></audio>
+
+    <div id="game-container">
 </head>
 <body>
     <div id="game-container">
