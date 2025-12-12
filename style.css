@@ -342,38 +342,47 @@ html.modal-open, body.modal-open {
 .dialogue-text { font-size: 1.1rem; font-weight: bold; color: #333; }
 
 /* =========================================
-   ★スマホ対応（徹底修正・決定版）
-   ここを上書きして！余白をたっぷり取るよ！
+   ★スマホ対応（タイトル見切れ絶対直す版）
    ========================================= */
 @media (max-width: 768px) {
     /* === ①全体レイアウト === */
     html, body {
         height: 100%;
-        /* overflow: hidden; は削除済み */
+        overflow-x: hidden;
     }
     
     #game-container { 
-        /* ★ここ重要！上を130px空けて、BGMボタンや切り欠きを避ける */
-        padding: 130px 20px 40px 20px !important;
+        /* ★ここ重要！上を150px空けて、強制的に下に下げる */
+        padding-top: 150px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-bottom: 50px !important;
         
         width: 100%;
-        min-height: 100vh;
+        min-height: 100dvh; /* 100vh ではなく 100dvh にしてアドレスバー対策 */
+        
         border-radius: 0;
         border: none;
         margin: 0;
         
-        /* 中身を上から順に並べる設定 */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        /* 中身を強制的に「上詰め」にする（中央寄せさせない） */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important; 
+        align-items: center !important;
     }
 
     h1 { 
-        /* タイトル文字を少し小さくして収まりよくする */
+        /* タイトル文字の設定 */
         font-size: 1.8em; 
-        margin-bottom: 20px;
-        margin-top: 0;
+        margin-top: 0 !important;    /* 上のマージンはゼロ（paddingで調整するため） */
+        margin-bottom: 30px !important;
         line-height: 1.2;
+        flex-shrink: 0; /* 潰れないようにする */
+        
+        /* 念のため手前に表示 */
+        position: relative;
+        z-index: 10;
     }
     
     /* === ②モーダル（キャラ選択など） === */
@@ -404,8 +413,8 @@ html.modal-open, body.modal-open {
     /* === ③ボタン類の位置調整 === */
     .close {
         position: fixed !important;
-        top: 15px !important;
-        left: 15px !important;
+        top: 20px !important;
+        left: 20px !important;
         z-index: 2147483647 !important;
         background: rgba(255, 255, 255, 0.9);
         width: 44px; height: 44px;
@@ -418,7 +427,6 @@ html.modal-open, body.modal-open {
     }
 
     #modal-jump-btn { 
-        /* BGMボタンの下、タイトルの邪魔にならない位置 */
         top: 100px !important; 
         right: 20px !important;
     }
