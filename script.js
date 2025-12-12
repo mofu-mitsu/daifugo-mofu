@@ -1452,7 +1452,7 @@ function startBgm() {
 }
 
 // ==========================================
-// ★修正: 決定ボタンへワープ＆強力なスクロールロック
+// ★修正: 決定ボタンへワープ＆最強のスクロールロック
 // ==========================================
 const jumpBtn = document.getElementById('modal-jump-btn');
 
@@ -1461,42 +1461,51 @@ if (jumpBtn) {
         e.preventDefault();
         e.stopPropagation();
         
-        // ★修正: 今開いているモーダルの中身を探してスクロールさせる
-        // キャラクタ選択画面が開いている場合
-        const charContent = document.querySelector('.character-modal-content');
-        
-        if (charContent && charContent.offsetParent !== null) {
-            charContent.scrollTo({
-                top: charContent.scrollHeight,
+        // 内側の箱をスクロールさせる
+        const modalContent = document.querySelector('.character-modal-content');
+        if (modalContent) {
+            modalContent.scrollTo({
+                top: modalContent.scrollHeight,
                 behavior: 'smooth'
             });
         }
     };
 }
 
-// モーダルを開く処理の強化
+// 現在のスクロール位置を保存する変数
+let scrollPosition = 0;
+
+// モーダルを開く
 const originalOpenCharacterModal = openCharacterModal;
 openCharacterModal = function(isSpectator) {
     originalOpenCharacterModal(isSpectator);
     
-    // ★HTMLとBODY両方にクラスをつけてスクロールを完全に封印
-    document.documentElement.classList.add('modal-open');
-    document.body.classList.add('modal-open');
+    // ★現在のスクロール位置を保存
+    scrollPosition = window.pageYOffset;
     
-    // 矢印を表示（flexにして中央寄せを有効化）
+    // ★bodyを物理的に固定（これで外側は絶対に動かない）
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    
+    // 矢印を表示
     if (jumpBtn) {
         jumpBtn.style.setProperty('display', 'flex', 'important');
     }
 };
 
-// モーダルを閉じる処理の強化
+// モーダルを閉じる
 const originalCloseCharacterModalFunc = closeCharacterModalFunc;
 closeCharacterModalFunc = function() {
     originalCloseCharacterModalFunc();
     
-    // ロック解除
-    document.documentElement.classList.remove('modal-open');
-    document.body.classList.remove('modal-open');
+    // ★固定を解除してスクロール位置を戻す
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, scrollPosition);
     
     // 矢印を非表示
     if (jumpBtn) {
