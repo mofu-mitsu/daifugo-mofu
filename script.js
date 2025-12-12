@@ -2,7 +2,7 @@
 // 定数・設定
 // ==========================================
 const SUITS = ['spades', 'hearts', 'diamonds', 'clubs'];
-const RANKS = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2']; 
+const RANKS = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
 const JOKER = 'black_joker';
 const RED_JOKER = 'red_joker';
 const RANKINGS = ['大富豪', '富豪', '貧民', '大貧民'];
@@ -10,85 +10,98 @@ const RANKINGS = ['大富豪', '富豪', '貧民', '大貧民'];
 let CHARACTERS = {};
 
 const CLASS_2_1 = [
-    "miriya", "hitori", "ketsui", "ameri", "shogo", "yuko", "akira", "tomoki", 
+    "miriya", "hitori", "ketsui", "ameri", "shogo", "yuko", "akira", "tomoki",
     "wataru", "zakuro", "kotori", "mikina", "iseri", "maria", "migiwa", "ryogo", "jiha", "rei"
 ];
 const CLASS_2_2 = [
-    "yae", "akari", "enishi", "matoi", "suzu", "arin", "yasashi", "rui", 
+    "yae", "akari", "enishi", "matoi", "suzu", "arin", "yasashi", "rui",
     "makishi", "shige", "hakomo", "shizuka", "mirin", "yuzu", "shinon", "hikari", "kozue", "yamato"
 ];
 
-// トリプルイベント定義（省略なし）
+// トリプルイベント定義
 const TRIANGLE_EVENTS = [
-  {
-    "id": "migiwa_ketsui_ryogo",
-    "characters": ["migiwa", "ketsui", "ryogo"],
-    "lines": {
-      "start": {
-        "migiwa": [ "ちょ、二人してウチの相手すんの！？水兵部三つ巴バトルじゃな！！", "けついもりょうごも本気顔しとるけど…ウチが一番に上がるけぇ覚悟しとき！！", "水兵部の誇り…今日はウチが守ったるけぇな！！" ],
-        "ketsui": [ "ほいほい…水兵部三人揃うとかエモいのぉ。船長として負けられんわ。", "みぎわもりょうごも、ええ顔しとるの。ほうじゃけぇワシも燃えるんよ。", "水兵部の威信かけて…全力でやらせてもらうで。" ],
-        "ryogo": [ "水兵部三人か…データ上、この組み合わせは接戦になる確率が高いな。", "けついの直感とみぎわの勢い…両方同時は情報量多いけど、勝ち筋は見えてる。", "水兵部として…負けられない戦いだ。" ]
-      },
-      "think": {
-        "migiwa": [ "んー…二人の動き読みづらいんよ…でもウチの勢いで押し切ったる！", "けついとりょうご、どっちも油断ならんけぇ…慎重にいかな…。", "水兵部の仲間じゃけど…今は敵じゃけぇな…ふふん！" ],
-        "ketsui": [ "みぎわの勢いとりょうごの読み…両方警戒せなアカンのぉ。", "二人の動き見とったら…こっちの手が読めるかもしれんわ。", "船長として…ここは慎重にいくで。" ],
-        "ryogo": [ "二人の手札…まだ読み切れてない。もう少し情報が必要だ。", "けついの直感ムーブとみぎわの勢い任せ…対照的すぎて予測が難しい。", "水兵部三人…それぞれのクセは把握してる。あとはタイミングだ。" ]
-      },
-      "play": {
-        "migiwa": [ "ほれっ！ウチの一手じゃ！二人とも止められんじゃろ！？", "水兵部の勢い、見せたるけぇ！！", "けついもりょうごも…この手は読めんかったじゃろ！？ふふん！" ],
-        "ketsui": [ "ほいじゃあ…船長の一手、見せたるで。", "みぎわもりょうごも…ワシの動き、読めとるか？", "水兵部の船長として…ここは譲れんのぉ。" ],
-        "ryogo": [ "計算通り…この手が最適解だ。", "二人の動き…予測範囲内。僕の勝ち筋は崩れてない。", "水兵部の知識担当として…ここは確実にいく。" ]
-      },
-      "pressure": {
-        "migiwa": [ "ちょ、二人してウチにプレッシャーかけんでよ！？…でも負けんけぇ！！", "強いの来たけど…ウチの勢いは止まらんけぇな！！", "けついもりょうごも本気出しすぎじゃろ！？…ウチも本気出したる！！" ],
-        "ketsui": [ "おいおい…二人して本気出すとか反則じゃろ？まぁええけぇ、受けて立つで。", "みぎわもりょうごも…ええ攻めしよるの。船長として負けられんわ。", "こりゃあ手加減しとったら沈むわ…全力でいくで。" ],
-        "ryogo": [ "二人同時に強い手…さすがに厳しいな。でも諦めない。", "けついの直感とみぎわの勢い…その衝突点こそ僕の入り込む余地だ。", "プレッシャーは感じるけど…まだ勝ち筋は消えてない。" ]
-      },
-      "antiPressure": {
-        "migiwa": [ "ほれっ！ウチの強いやつじゃ！二人とも耐えられる！？", "水兵部の勢い…見せたるけぇな！！", "けついもりょうごも…このプレッシャー、受け止めてみぃ！！" ],
-        "ketsui": [ "ほいじゃあ…船長の本気、見せたるで。", "みぎわもりょうごも…ワシの攻め、止められるか？", "水兵部の船長として…ここは強気でいくで。" ],
-        "ryogo": [ "計算上、この手が最も効果的だ。二人とも…耐えられるかな？", "けついとみぎわ…この圧、受け止めてもらうよ。", "水兵部の分析力…今ここで発揮する。" ]
-      },
-      "win": {
-        "migiwa": [ "やったぁぁ！！ウチが一番じゃ！！けついもりょうごも…悔しいじゃろ！？ふふん！！", "水兵部の誇り…ウチが守ったで！！", "ほれ見ぃ！ウチの勢いは本物じゃったろ！？二人とも次は頑張りぃや！！" ],
-        "ketsui": [ "ほいほい…船長の勝ちじゃの。みぎわもりょうごも、ようやったで。", "水兵部の船長として…当然の結果じゃの。ふふん。", "二人とも強かったけぇ…ワシも本気出さなアカンかったわ。ええ勝負じゃったで。" ],
-        "ryogo": [ "勝てた…計算通りだ。けついとみぎわ…強敵だったよ。", "水兵部の知識担当として…面目を保てた。", "二人の動き…最終的には読み切れた。データの勝利だ。" ]
-      },
-      "lose": {
-        "migiwa": [ "うぅ…負けたぁ…。けついかりょうごが勝ったんか…悔しいわ…！！", "水兵部の誇り…守れんかった…次は絶対勝つけぇな！！", "ちくしょー！！二人とも強すぎじゃろ！？…でも次は負けんけぇ！！" ],
-        "ketsui": [ "やられたのぉ…。みぎわかりょうごが勝ったんか…船長として不甲斐ないわ。", "水兵部の船長が負けるとか…悔しいけぇ、次は絶対勝つで。", "ほぅ…やるのぉ。次はワシが本気出させてもらうけぇな。" ],
-        "ryogo": [ "負けた…計算ミスか。けついかみぎわが勝ったんだな…認めるよ。", "水兵部として…負けられない戦いだったのに…次は修正する。", "データ上では勝てるはずだったんだけど…二人の動きが予測を超えてたな。" ]
-      },
-      "rank1": {
-        "migiwa": [ "大富豪じゃ！！水兵部の副部長の実力見せたったで！！", "けついもりょうごも…ウチの勢いには勝てんかったじゃろ！？ふふん！！", "水兵部三人の中で一番！！誇らしいわ〜💕" ],
-        "ketsui": [ "大富豪じゃの。船長として当然の結果じゃわ。", "みぎわもりょうごも…まだまだ修行が足りんのぉ。ふふん。", "水兵部の船長の貫禄…見せたったで。" ],
-        "ryogo": [ "大富豪…計算が完璧だった証拠だ。", "けついとみぎわ…君たちの動き、全て読み切った。", "水兵部の分析力…今日は冴えてたな。" ]
-      },
-      "rank2": {
-        "migiwa": [ "富豪か…惜しかったわ！けついかりょうごが大富豪取ったんか…！", "二位…悔しいけど、水兵部三人で上位独占はええ感じじゃな！", "次は絶対大富豪取るけぇな！！" ],
-        "ketsui": [ "富豪じゃの。惜しかったわ…みぎわかりょうごが大富豪か。", "二位…船長としては不本意じゃけど、水兵部が上位なんはええことじゃの。", "次は絶対一位取るで。" ],
-        "ryogo": [ "富豪…計算が甘かったな。けついかみぎわが大富豪か。", "二位…悔しいけど、水兵部の面目は保てた。", "次は修正して大富豪を取る。" ]
-      }
+    {
+        "id": "migiwa_ketsui_ryogo",
+        "characters": ["migiwa", "ketsui", "ryogo"],
+        "lines": {
+            "start": {
+                "migiwa": [
+                    "ちょ、二人してウチの相手すんの！？水兵部三つ巴バトルじゃな！！",
+                    "けついもりょうごも本気顔しとるけど…ウチが一番に上がるけぇ覚悟しとき！！",
+                    "水兵部の誇り…今日はウチが守ったるけぇな！！"
+                ],
+                "ketsui": [
+                    "ほいほい…水兵部三人揃うとかエモいのぉ。船長として負けられんわ。",
+                    "みぎわもりょうごも、ええ顔しとるの。ほうじゃけぇワシも燃えるんよ。",
+                    "水兵部の威信かけて…全力でやらせてもらうで。"
+                ],
+                "ryogo": [
+                    "水兵部三人か…データ上、この組み合わせは接戦になる確率が高いな。",
+                    "けついの直感とみぎわの勢い…両方同時は情報量多いけど、勝ち筋は見えてる。",
+                    "水兵部として…負けられない戦いだ。"
+                ]
+            },
+            "think": {
+                "migiwa": ["んー…二人の動き読みづらいんよ…でもウチの勢いで押し切ったる！"],
+                "ketsui": ["みぎわの勢いとりょうごの読み…両方警戒せなアカンのぉ。"],
+                "ryogo": ["二人の手札…まだ読み切れてない。もう少し情報が必要だ。"]
+            },
+            "play": {
+                "migiwa": ["ほれっ！ウチの一手じゃ！二人とも止められんじゃろ！？"],
+                "ketsui": ["ほいじゃあ…船長の一手、見せたるで。"],
+                "ryogo": ["計算通り…この手が最適解だ。"]
+            },
+            "pressure": {
+                "migiwa": ["ちょ、二人してウチにプレッシャーかけんでよ！？…でも負けんけぇ！！"],
+                "ketsui": ["おいおい…二人して本気出すとか反則じゃろ？まぁええけぇ、受けて立つで。"],
+                "ryogo": ["二人同時に強い手…さすがに厳しいな。でも諦めない。"]
+            },
+            "antiPressure": {
+                "migiwa": ["ほれっ！ウチの強いやつじゃ！二人とも耐えられる！？"],
+                "ketsui": ["ほいじゃあ…船長の本気、見せたるで。"],
+                "ryogo": ["計算上、この手が最も効果的だ。二人とも…耐えられるかな？"]
+            },
+            "win": {
+                "migiwa": ["やったぁぁ！！ウチが一番じゃ！！けついもりょうごも…悔しいじゃろ！？ふふん！！"],
+                "ketsui": ["ほいほい…船長の勝ちじゃの。みぎわもりょうごも、ようやったで。"],
+                "ryogo": ["勝てた…計算通りだ。けついとみぎわ…強敵だったよ。"]
+            },
+            "lose": {
+                "migiwa": ["うぅ…負けたぁ…。けついかりょうごが勝ったんか…悔しいわ…！！"],
+                "ketsui": ["やられたのぉ…。みぎわかりょうごが勝ったんか…船長として不甲斐ないわ。"],
+                "ryogo": ["負けた…計算ミスか。けついかみぎわが勝ったんだな…認めるよ。"]
+            },
+            "rank1": {
+                "migiwa": ["大富豪じゃ！！水兵部の副部長の実力見せたったで！！"],
+                "ketsui": ["大富豪じゃの。船長として当然の結果じゃわ。"],
+                "ryogo": ["大富豪…計算が完璧だった証拠だ。"]
+            },
+            "rank2": {
+                "migiwa": ["富豪か…惜しかったわ！けついかりょうごが大富豪取ったんか…！"],
+                "ketsui": ["富豪じゃの。惜しかったわ…みぎわかりょうごが大富豪か。"],
+                "ryogo": ["富豪…計算が甘かったな。けついかみぎわが大富豪か。"]
+            }
+        }
     }
-  }
 ];
 
 let gameState = {
     players: [],
     currentPlayerIndex: 0,
     lastPlayIndex: -1,
-    field: [], 
+    field: [],
     deck: [],
     playerName: '',
-    playerAvatar: null, 
+    playerAvatar: null,
     selectedCards: [],
     revolution: false,
     selectedCharacters: [],
     finishedPlayers: [],
-    round: 1, 
+    round: 1,
     prevRanks: {},
     isSpectator: false,
-    isProcessing: false // ロックフラグ
+    isProcessing: false, // ロックフラグ
+    isGameEnded: false   // ゲーム終了フラグ（★追加）
 };
 
 // ==========================================
@@ -162,10 +175,9 @@ function loadCharacterDefinitions() {
     }
 }
 
-// 画像プリロード（キャッシュ用）
+// 画像プリロード
 function preloadCharacterImages() {
     if (document.getElementById('preload-container')) return;
-
     const preloadContainer = document.createElement('div');
     preloadContainer.id = 'preload-container';
     preloadContainer.style.position = 'absolute';
@@ -178,14 +190,11 @@ function preloadCharacterImages() {
     document.body.appendChild(preloadContainer);
 
     const situations = ['start', 'win', 'lose', 'pressure', 'think', 'play', 'pass', 'revolution', 'joker', 'pair', 'stairs', 'single'];
-
     Object.values(CHARACTERS).forEach(char => {
         if (!char.portrait) return;
-        
         const img = document.createElement('img');
         img.src = char.portrait;
         preloadContainer.appendChild(img);
-
         situations.forEach(sit => {
             const vImg = document.createElement('img');
             vImg.src = char.portrait.replace('.png', `_${sit}.png`);
@@ -198,25 +207,44 @@ function preloadCharacterImages() {
 // ==========================================
 // キャラ選択
 // ==========================================
-let tempSelectedCharacters = []; 
+let tempSelectedCharacters = [];
 let isSelectingForSpectator = false;
+let scrollPosition = 0; // スクロール位置保存用
+
+const jumpBtn = document.getElementById('modal-jump-btn');
+
+// 矢印ボタンクリックイベント
+if (jumpBtn) {
+    jumpBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const modalContent = document.querySelector('.character-modal-content');
+        if (modalContent) {
+            modalContent.scrollTo({
+                top: modalContent.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    };
+}
 
 function openCharacterModal(isSpectator) {
     isSelectingForSpectator = isSpectator;
     tempSelectedCharacters = [...gameState.selectedCharacters];
-    
+
     const title = characterModal.querySelector('h2');
     if (title) title.textContent = isSpectator ? "観戦する4人を選択（最初は手前）" : "対戦相手を3人選択";
 
     characterModal.style.display = 'block';
     renderCharacterGrid();
     updateModalSelectionDisplay();
-    
-    // ★修正: CSSクラスだけで制御する（JSでのスタイル操作は削除）
+
+    // 背景ロック
+    document.documentElement.classList.add('modal-open');
     document.body.classList.add('modal-open');
-    
-    // 矢印ボタンを表示
-    if (jumpBtn) jumpBtn.style.display = 'flex';
+
+    // 矢印ボタン表示
+    if (jumpBtn) jumpBtn.style.setProperty('display', 'flex', 'important');
 
     const firstId = Object.keys(CHARACTERS)[0];
     if (firstId) showCharacterDetails(CHARACTERS[firstId]);
@@ -225,12 +253,15 @@ function openCharacterModal(isSpectator) {
 function closeCharacterModalFunc() {
     characterModal.style.display = 'none';
     
-    // ★修正: ロック解除
+    // 背景ロック解除
+    document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
-    
-    // 矢印ボタンを非表示
+
+    // 矢印ボタン非表示
     if (jumpBtn) jumpBtn.style.display = 'none';
 }
+
+closeCharacterModal.onclick = closeCharacterModalFunc;
 
 function renderCharacterGrid() {
     characterGrid.innerHTML = '';
@@ -245,26 +276,27 @@ function renderCharacterGrid() {
 
         const gridContainer = document.createElement('div');
         gridContainer.className = 'character-section-grid';
-        
+
         ids.forEach(id => {
             const charData = CHARACTERS[id];
             if (!charData) return;
             const card = document.createElement('div');
             card.className = 'character-card';
             if (tempSelectedCharacters.includes(id)) card.classList.add('selected');
-            
+
             const fullPath = charData.portrait || '';
             const fileNameOnly = fullPath.split('/').pop();
             const imgTag = `<img src="${fullPath}" alt="${charData.name}" onerror="this.onerror=null; this.src='${fileNameOnly}'; this.style.display='none'; this.nextElementSibling.style.display='flex'">`;
             const fallbackAvatar = `<div class="fallback-avatar" style="width:80px;height:80px;border-radius:50%;background:#eee;display:none;margin:0 auto 10px;line-height:80px;font-size:30px;color:#aaa;align-items:center;justify-content:center;">${charData.name.charAt(0)}</div>`;
 
             card.innerHTML = `${imgTag}${fallbackAvatar}<div style="font-weight:bold;">${charData.name}</div><div style="font-size:0.8em;color:#666;">${charData.MBTI}</div>`;
-            
+
+            // クリックで選択＆プロフ表示
             card.onclick = () => {
                 toggleCharacterSelection(id, card);
                 showCharacterDetails(charData);
             };
-            
+
             gridContainer.appendChild(card);
         });
         characterGrid.appendChild(gridContainer);
@@ -289,13 +321,12 @@ function toggleCharacterSelection(id, cardElement) {
         cardElement.classList.remove('selected');
     }
     updateModalSelectionDisplay();
-    showCharacterDetails(CHARACTERS[id]);
 }
 
 function updateModalSelectionDisplay() {
     selectedCharactersList.innerHTML = '';
     const required = isSelectingForSpectator ? 4 : 1;
-    
+
     if (tempSelectedCharacters.length < required) {
         confirmSelectionBtn.disabled = true;
     } else {
@@ -327,7 +358,7 @@ function showCharacterDetails(char) {
     characterMbti.textContent = `MBTI: ${char.MBTI}${gender}`;
     characterEnneagram.textContent = `エニアグラム: ${char.enneagram}`;
     characterDescription.textContent = char.profile || "詳細情報なし";
-    
+
     const fullPath = char.portrait || '';
     const fileNameOnly = fullPath.split('/').pop();
     characterPortrait.src = fullPath;
@@ -335,22 +366,17 @@ function showCharacterDetails(char) {
     characterPortrait.style.display = 'inline-block';
 }
 
-closeCharacterModal.onclick = closeCharacterModalFunc;
-window.onclick = (e) => { 
-    if (e.target === characterModal) closeCharacterModalFunc();
-    if (e.target === rulesModal) rulesModal.style.display = 'none';
-};
-
+// 決定ボタンクリック処理
 confirmSelectionBtn.onclick = () => {
     gameState.selectedCharacters = [...tempSelectedCharacters];
-    gameState.isSpectator = isSelectingForSpectator;
-    
+    gameState.isSpectator = isSelectingForSpectator; // ★修正: ここでモードを確実に保存！
+
     const names = gameState.selectedCharacters.map(id => CHARACTERS[id].name).join('、');
     const modeName = gameState.isSpectator ? "【観戦モード】" : "【通常モード】";
     selectionStatus.textContent = `${modeName} 参加者: ${names}`;
     selectionStatus.style.color = "#333";
     selectionStatus.style.fontWeight = "bold";
-    
+
     closeCharacterModalFunc();
 };
 
@@ -374,14 +400,15 @@ function startGame() {
     gameState.field = [];
     gameState.revolution = false;
     gameState.finishedPlayers = [];
-    gameState.lastPlayIndex = -1; 
+    gameState.lastPlayIndex = -1;
     gameState.round = 1;
     gameState.prevRanks = {};
     gameState.isProcessing = false;
-    
+    gameState.isGameEnded = false; // ★追加: 終了フラグ初期化
+
     setupPlayers();
-    preloadCharacterImages(); 
-    startBgm(); // BGM開始
+    preloadCharacterImages();
+    startBgm();
     startRound();
 }
 
@@ -432,22 +459,22 @@ function startRound() {
     gameState.finishedPlayers = [];
     gameState.lastPlayIndex = -1;
     gameState.isProcessing = false;
-    gameState.isTalking = false; 
-    
+    gameState.isTalking = false;
+    gameState.isGameEnded = false; // リセット
+
     gameState.players.forEach(p => {
         p.hand = [];
-        p.rank = null; 
+        p.rank = null;
     });
 
     setupScreen.style.display = 'none';
     resultModal.style.display = 'none';
     gameScreen.style.display = 'block';
-    
+
     createDialogueElement();
-    
     initDeck();
     updateGameDisplay();
-    
+
     if (gameState.round > 1) {
         setTimeout(performCardExchange, 1500);
     } else {
@@ -471,15 +498,15 @@ function initDeck() {
     }
 
     let playerIdx = 0;
-    while(gameState.deck.length > 0) {
+    while (gameState.deck.length > 0) {
         gameState.players[playerIdx].hand.push(gameState.deck.pop());
         playerIdx = (playerIdx + 1) % gameState.players.length;
     }
 
     gameState.players.forEach(p => sortHand(p.hand));
-    
+
     if (gameState.round > 1) {
-        const daihinmin = gameState.players.find(p => gameState.prevRanks[p.id] === 3); 
+        const daihinmin = gameState.players.find(p => gameState.prevRanks[p.id] === 3);
         gameState.currentPlayerIndex = daihinmin ? gameState.players.indexOf(daihinmin) : 0;
     } else {
         gameState.currentPlayerIndex = 0;
@@ -487,28 +514,26 @@ function initDeck() {
 }
 
 function checkTriangleEvents() {
-    if (gameState.round > 1) return false; 
+    if (gameState.round > 1) return false;
     const participantIds = gameState.players.map(p => p.character);
-    
+
     for (const event of TRIANGLE_EVENTS) {
         const isMatch = event.characters.every(charId => participantIds.includes(charId));
-        
         if (isMatch && Math.random() < 0.4) {
-            gameState.isTalking = true; 
+            gameState.isTalking = true;
             let delay = 500;
             const lines = event.lines.start;
             const charIds = Object.keys(lines);
-            
+
             charIds.forEach((charId, index) => {
                 const charData = CHARACTERS[charId];
                 const text = lines[charId][Math.floor(Math.random() * lines[charId].length)];
-                
                 setTimeout(() => {
                     showDialogue(charData.name, text, charId, 'start');
                     if (index === charIds.length - 1) {
                         setTimeout(() => {
-                            gameState.isTalking = false; 
-                            updateGameDisplay(); 
+                            gameState.isTalking = false;
+                            updateGameDisplay();
                         }, 4000);
                     }
                 }, delay);
@@ -529,7 +554,6 @@ function performCardExchange() {
     });
 
     let delay = 0;
-
     const processExchange = (winnerRank, loserRank, winCount, loseCount) => {
         const winner = playersByRank[winnerRank];
         const loser = playersByRank[loserRank];
@@ -558,17 +582,15 @@ function performCardExchange() {
 
     processExchange(0, 3, 2, 2);
     processExchange(1, 2, 1, 1);
-    
+
     setTimeout(() => {
         gameState.players.forEach(p => sortHand(p.hand));
         showNotification("都落ち/カード交換が行われました");
-        
         setTimeout(() => {
-             gameState.isTalking = false;
-             playStartVoices(); 
-             showNotification(`第${gameState.round}回戦 スタート！`);
+            gameState.isTalking = false;
+            playStartVoices();
+            showNotification(`第${gameState.round}回戦 スタート！`);
         }, 2000);
-        
     }, delay + 500);
 }
 
@@ -596,7 +618,7 @@ function getCardStrength(cardName) {
 function getRankValue(cardName) {
     if (cardName === JOKER || cardName === RED_JOKER) return 100;
     const rank = cardName.split('_of_')[0];
-    const order = ['3','4','5','6','7','8','9','10','jack','queen','king','ace','2'];
+    const order = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
     return order.indexOf(rank);
 }
 
@@ -610,10 +632,9 @@ function sortHand(hand) {
 }
 
 function playStartVoices() {
-    gameState.isTalking = true; // ロック
+    gameState.isTalking = true;
     let delay = 500;
     let maxDelay = 0;
-    
     gameState.players.forEach(p => {
         if (!p.isHuman) {
             setTimeout(() => {
@@ -624,7 +645,6 @@ function playStartVoices() {
             maxDelay = delay;
         }
     });
-    
     setTimeout(() => {
         gameState.isTalking = false;
         updateGameDisplay();
@@ -641,12 +661,12 @@ function updateGameDisplay() {
     updateField();
     updatePlayers();
     updatePlayerHand();
-    
-    if (gameState.isProcessing || gameState.isTalking) return; 
+
+    if (gameState.isProcessing || gameState.isTalking || gameState.isGameEnded) return;
 
     const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-    const isHumanTurn = currentPlayer.isHuman; 
-    
+    const isHumanTurn = currentPlayer.isHuman;
+
     if (isHumanTurn) {
         document.getElementById('controls').style.display = 'block';
         playButton.disabled = false;
@@ -665,27 +685,34 @@ function updateGameDisplay() {
 function checkFieldClear() {
     if (gameState.lastPlayIndex === gameState.currentPlayerIndex) {
         gameState.field = [];
-        gameState.lastPlayIndex = -1; 
-        
+        gameState.lastPlayIndex = -1;
+
         const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-        const msg = (currentPlayer.isHuman || currentPlayer.isSpectatorSeat) ? "（あなた）が親番です" : `${currentPlayer.name}が親番です`;
+        // ★修正: 観戦モードでもキャラ名を表示
+        let msg = `${currentPlayer.name}が親番です`;
+        if (currentPlayer.isHuman) {
+            msg = "（あなた）が親番です";
+        }
         showNotification(msg);
-        
+
         updateField();
         return true;
     }
-    
+
     if (gameState.lastPlayIndex !== -1 && gameState.finishedPlayers.includes(gameState.lastPlayIndex)) {
         if (gameState.field.length > 0) {
-             gameState.field = [];
-             gameState.lastPlayIndex = -1;
-             
-             const currentPlayer = gameState.players[gameState.currentPlayerIndex];
-             const msg = (currentPlayer.isHuman || currentPlayer.isSpectatorSeat) ? "前の親が上がりのため、親番です" : `前の親が上がりのため、${currentPlayer.name}が親番です`;
-             showNotification(msg);
-             
-             updateField();
-             return true;
+            gameState.field = [];
+            gameState.lastPlayIndex = -1;
+
+            const currentPlayer = gameState.players[gameState.currentPlayerIndex];
+            let msg = `前の親が上がりのため、${currentPlayer.name}が親番です`;
+            if (currentPlayer.isHuman) {
+                msg = "前の親が上がりのため、親番です";
+            }
+            showNotification(msg);
+
+            updateField();
+            return true;
         }
     }
     return false;
@@ -697,8 +724,8 @@ function updateField() {
         fieldElement.innerHTML = '<div style="color:#888; text-align:center; width:100%;">場にカードはありません</div>';
         return;
     }
-    const cardWidth = 110; 
-    const overlap = 30;    
+    const cardWidth = 110;
+    const overlap = 30;
     const totalWidth = (gameState.field.length - 1) * overlap + cardWidth;
     const startX = (fieldElement.clientWidth - totalWidth) / 2;
 
@@ -706,8 +733,8 @@ function updateField() {
         const el = document.createElement('div');
         el.className = 'card';
         el.style.backgroundImage = `url(cards/${card}.png)`;
-        el.style.position = 'absolute'; 
-        el.style.left = `${startX + index * overlap}px`; 
+        el.style.position = 'absolute';
+        el.style.left = `${startX + index * overlap}px`;
         el.style.zIndex = index;
         fieldElement.appendChild(el);
     });
@@ -717,10 +744,10 @@ function updatePlayers() {
     playersElement.innerHTML = '';
     gameState.players.forEach((p, idx) => {
         if (p.isHuman || (gameState.isSpectator && idx === 0)) return;
-        
+
         const div = document.createElement('div');
         div.className = 'player';
-        
+
         if (!gameState.finishedPlayers.includes(idx) && idx === gameState.currentPlayerIndex) {
             div.style.border = "3px solid #ff6b6b";
             div.style.backgroundColor = "#fff0f0";
@@ -729,14 +756,14 @@ function updatePlayers() {
         const char = CHARACTERS[p.character];
         const fullPath = char && char.portrait ? char.portrait : '';
         const fileNameOnly = fullPath.split('/').pop();
-        
-        const img = fullPath 
-            ? `<img src="${fullPath}" onerror="this.src='${fileNameOnly}'; this.onerror=null;" style="width:40px;height:40px;border-radius:50%;vertical-align:middle;margin-right:10px;">` 
-            : `<div style="width:40px;height:40px;border-radius:50%;background:#eee;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;">${p.name.charAt(0)}</div>`;
-            
+
+        const img = fullPath ?
+            `<img src="${fullPath}" onerror="this.src='${fileNameOnly}'; this.onerror=null;" style="width:40px;height:40px;border-radius:50%;vertical-align:middle;margin-right:10px;">` :
+            `<div style="width:40px;height:40px;border-radius:50%;background:#eee;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;">${p.name.charAt(0)}</div>`;
+
         const rankText = p.rank ? `<span style="color:#d32f2f;font-weight:bold;">[${p.rank}]</span>` : '';
         const status = gameState.finishedPlayers.includes(idx) ? '上がり' : `手札: ${p.hand.length}枚`;
-        
+
         div.innerHTML = `${img}<strong>${p.name}</strong> ${rankText}<br>${status}`;
         playersElement.appendChild(div);
     });
@@ -745,13 +772,13 @@ function updatePlayers() {
 function updatePlayerHand() {
     playerHandElement.innerHTML = '';
     const myHand = gameState.players[0].hand;
-    
+
     myHand.forEach((card, i) => {
         const el = document.createElement('div');
         el.className = 'card';
         if (gameState.selectedCards.includes(i)) el.classList.add('selected');
         el.style.backgroundImage = `url(cards/${card}.png)`;
-        
+
         if (!gameState.isSpectator) {
             el.onclick = () => {
                 if (gameState.selectedCards.includes(i)) {
@@ -772,14 +799,14 @@ function isValidPlay(cards) {
     const isJoker = (c) => c === JOKER || c === RED_JOKER;
     const normalCards = cards.filter(c => !isJoker(c));
     let isStairs = false;
-    
+
     if (normalCards.length >= 3 && cards.length === normalCards.length) {
         const firstSuit = getSuit(normalCards[0]);
         if (normalCards.every(c => getSuit(c) === firstSuit)) {
-            const sorted = [...normalCards].sort((a,b) => getRankValue(a) - getRankValue(b));
+            const sorted = [...normalCards].sort((a, b) => getRankValue(a) - getRankValue(b));
             let consecutive = true;
-            for(let i=0; i<sorted.length-1; i++) {
-                if (getRankValue(sorted[i+1]) !== getRankValue(sorted[i]) + 1) {
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (getRankValue(sorted[i + 1]) !== getRankValue(sorted[i]) + 1) {
                     consecutive = false;
                     break;
                 }
@@ -841,15 +868,14 @@ function playerPass() {
 function executePlay(player, cards, removeTarget) {
     gameState.field = cards;
     gameState.lastPlayIndex = gameState.players.indexOf(player);
-    
+
     let targetCards = [];
     if (player.isHuman && !gameState.isSpectator) {
         targetCards = removeTarget.map(i => player.hand[i]);
     } else {
-        targetCards = removeTarget; 
+        targetCards = removeTarget;
     }
 
-    // 手札削除（重複カード対応：1枚ずつ確実に）
     targetCards.forEach(card => {
         const idx = player.hand.indexOf(card);
         if (idx !== -1) player.hand.splice(idx, 1);
@@ -859,22 +885,16 @@ function executePlay(player, cards, removeTarget) {
         updatePlayerHand();
     }
 
-    // プレッシャー判定（順番に喋らせる）
     const strength = getCardStrength(cards[0]);
-    if (strength >= 10 || cards.some(c=>c===JOKER||c===RED_JOKER)) {
-        gameState.isProcessing = true; // AI思考停止
-        
+    if (strength >= 10 || cards.some(c => c === JOKER || c === RED_JOKER)) {
+        gameState.isProcessing = true;
         let delay = 500;
-        let count = 0;
-        
-        // リアクション対象者
-        const reactors = gameState.players.filter(p => 
-            !p.isHuman && 
-            p !== player && 
+        const reactors = gameState.players.filter(p =>
+            !p.isHuman &&
+            p !== player &&
             !gameState.finishedPlayers.includes(gameState.players.indexOf(p))
         );
 
-        // ランダムで1〜2人選ぶ
         const numReactors = Math.random() < 0.5 ? 1 : 2;
         const chosenReactors = [];
         for (let i = 0; i < numReactors; i++) {
@@ -886,15 +906,13 @@ function executePlay(player, cards, removeTarget) {
         }
 
         chosenReactors.forEach(p => {
-             setTimeout(() => {
-                 const char = CHARACTERS[p.character];
-                 showDialogue(p.name, getRandomDialogue(char, 'antiPressure', p), p.character, 'lose');
-             }, delay);
-             
-             delay += 2000;
+            setTimeout(() => {
+                const char = CHARACTERS[p.character];
+                showDialogue(p.name, getRandomDialogue(char, 'antiPressure', p), p.character, 'lose');
+            }, delay);
+            delay += 2000;
         });
-        
-        // リアクション終了後に処理続行
+
         setTimeout(() => {
             gameState.isProcessing = false;
             continueExecute(player, cards);
@@ -916,11 +934,11 @@ function continueExecute(player, cards) {
         const char = CHARACTERS[player.character];
         if (char) showDialogue(player.name, "8切り！", player.character, 'play');
         else showDialogue(player.name, "8切り！", "player", "play");
-        
+
         gameState.field = [];
-        gameState.lastPlayIndex = -1; 
+        gameState.lastPlayIndex = -1;
         updateGameDisplay();
-        
+
         if (checkWin(player)) return;
 
         setTimeout(() => {
@@ -932,11 +950,10 @@ function continueExecute(player, cards) {
                 setTimeout(aiTurn, 1000);
             }
         }, 1200);
-        return; 
+        return;
     }
 
     if (checkWin(player)) return;
-    
     setTimeout(() => {
         advanceTurn();
     }, 1200);
@@ -944,21 +961,20 @@ function continueExecute(player, cards) {
 
 function checkWin(player) {
     if (player.hand.length === 0) {
-        if (player.rank !== null) return true;
+        if (player.rank !== null) return true; // すでに上がり
 
         const rankIndex = gameState.finishedPlayers.length;
         player.rank = RANKINGS[rankIndex];
         gameState.finishedPlayers.push(gameState.players.indexOf(player));
-        
+
         // 都落ち判定
         if (gameState.round > 1 && rankIndex === 0) {
             const prevKing = gameState.players.find(p => gameState.prevRanks[p.id] === 0);
             if (prevKing && prevKing !== player && !gameState.finishedPlayers.includes(gameState.players.indexOf(prevKing))) {
                 showNotification("都落ち発生！！");
                 prevKing.rank = RANKINGS[3];
-                gameState.finishedPlayers.push(gameState.players.indexOf(prevKing)); 
-                prevKing.hand = []; 
-                
+                gameState.finishedPlayers.push(gameState.players.indexOf(prevKing));
+                prevKing.hand = [];
                 const kChar = CHARACTERS[prevKing.character];
                 setTimeout(() => {
                     showDialogue(prevKing.name, getRandomDialogue(kChar, 'drop', prevKing), prevKing.character, 'lose');
@@ -968,17 +984,18 @@ function checkWin(player) {
 
         const char = CHARACTERS[player.character];
         let situation = rankIndex === 0 ? 'rank1' : 'rank2';
-        
         if (char && char.id === 'rei' && Math.random() < 0.2) situation = 'ketchup';
         else if (rankIndex > 1) situation = 'win';
-        
+
         if (char) {
             showDialogue(player.name, getRandomDialogue(char, situation, player), player.character, situation);
         } else {
             showDialogue(player.name, "上がりました！", "player", 'win');
         }
 
+        // ★修正: 3人上がったら終了（残りの1人は負け確定）
         if (gameState.finishedPlayers.length >= gameState.players.length - 1) {
+            gameState.isGameEnded = true; // 終了フラグ
             setTimeout(processGameEnd, 3000);
             return true;
         }
@@ -992,13 +1009,13 @@ function processGameEnd() {
         const loser = gameState.players[loserIndex];
         if (loser.rank === null) {
             loser.rank = RANKINGS[3];
-            gameState.finishedPlayers.push(loserIndex); 
+            gameState.finishedPlayers.push(loserIndex);
             const char = CHARACTERS[loser.character];
             if (char) showDialogue(loser.name, getRandomDialogue(char, 'lose', loser), loser.character, 'lose');
             else showDialogue(loser.name, "負けました...", "player", 'lose');
         }
     }
-    
+
     gameState.players.forEach((p, idx) => {
         const rank = gameState.finishedPlayers.indexOf(idx);
         gameState.prevRanks[p.id] = rank;
@@ -1019,21 +1036,33 @@ function showResultModal() {
     resultModal.style.display = 'block';
 }
 
-nextRoundButton.onclick = () => { gameState.round++; startRound(); };
-titleButton.onclick = () => { location.reload(); };
+nextRoundButton.onclick = () => {
+    gameState.round++;
+    startRound();
+};
+titleButton.onclick = () => {
+    location.reload();
+};
 
 function advanceTurn() {
+    if (gameState.isGameEnded) return; // 終了していたら何もしない
+
     let nextIndex = (gameState.currentPlayerIndex + 1) % gameState.players.length;
+    // 上がっているプレイヤーはスキップ
+    let count = 0;
     while (gameState.finishedPlayers.includes(nextIndex)) {
         nextIndex = (nextIndex + 1) % gameState.players.length;
+        count++;
+        if (count > 10) break; // 無限ループ防止
     }
+
     gameState.currentPlayerIndex = nextIndex;
     updateGameDisplay();
 }
 
-// AIターン処理（★修正：フリーズ対策）
+// AIターン処理（修正版：フリーズ対策強化）
 function aiTurn() {
-    if (gameState.isProcessing || gameState.isTalking) return; 
+    if (gameState.isProcessing || gameState.isTalking || gameState.isGameEnded) return;
 
     const aiPlayer = gameState.players[gameState.currentPlayerIndex];
     if (gameState.finishedPlayers.includes(gameState.currentPlayerIndex)) {
@@ -1042,7 +1071,7 @@ function aiTurn() {
     }
 
     if (checkFieldClear()) {
-        setTimeout(aiTurn, 1000); 
+        setTimeout(aiTurn, 1000);
         return;
     }
 
@@ -1055,21 +1084,22 @@ function aiTurn() {
 
     const playableMoves = getPlayableMoves(aiPlayer.hand);
 
-    // パスの場合（フリーズ防止のため確実に次のターンへ）
+    // パスの場合（フリーズ防止）
     if (playableMoves.length === 0) {
         gameState.isProcessing = true;
         setTimeout(() => {
             showDialogue(aiPlayer.name, getRandomDialogue(charData, 'pass', aiPlayer), aiPlayer.character, 'pass');
             setTimeout(() => {
                 gameState.isProcessing = false;
-                // AI用のパス処理（プレイヤーと共有しない）
-                advanceTurn(); 
-            }, 1500); 
+                if (!gameState.isGameEnded) {
+                    advanceTurn();
+                }
+            }, 1500);
         }, 800);
         return;
     }
 
-    // AI思考（カード選び）
+    // AI思考
     let selectedMove = null;
     playableMoves.sort((a, b) => getCardStrength(a[0]) - getCardStrength(b[0]));
     if (aiParams.aggressiveness > 0.7) {
@@ -1083,31 +1113,32 @@ function aiTurn() {
         selectedMove = playableMoves[idx];
     }
 
-    gameState.isProcessing = true; 
+    // カードを出す
+    gameState.isProcessing = true;
     setTimeout(() => {
         let situation = 'play';
         if (checkRevolution(selectedMove)) situation = 'revolution';
         else if (selectedMove.includes(JOKER) || selectedMove.includes(RED_JOKER)) situation = 'joker';
         else if (getCardStrength(selectedMove[0]) > 10) situation = 'pressure';
-        
+
         const isJoker = (c) => c === JOKER || c === RED_JOKER;
         const normalCards = selectedMove.filter(c => !isJoker(c));
-        
+
         if (selectedMove.length === 2 && situation === 'play') situation = 'pair';
         if (selectedMove.length >= 3 && situation === 'play') {
-             if (normalCards.length > 1 && normalCards[0].split('_of_')[0] !== normalCards[1].split('_of_')[0]) situation = 'stairs';
-             else if (normalCards.length === 1 && selectedMove.length >=3) situation = 'pair'; 
+            if (normalCards.length > 1 && normalCards[0].split('_of_')[0] !== normalCards[1].split('_of_')[0]) situation = 'stairs';
+            else if (normalCards.length === 1 && selectedMove.length >= 3) situation = 'pair';
         }
         if (selectedMove.length === 1 && situation === 'play') situation = 'single';
 
         showDialogue(aiPlayer.name, getRandomDialogue(charData, situation, aiPlayer), aiPlayer.character, situation);
-        
-        setTimeout(() => {
-            gameState.isProcessing = false; 
-            executePlay(aiPlayer, selectedMove, selectedMove);
-        }, 1500); 
 
-    }, 800); 
+        setTimeout(() => {
+            gameState.isProcessing = false;
+            executePlay(aiPlayer, selectedMove, selectedMove);
+        }, 1500);
+
+    }, 800);
 }
 
 function getPlayableMoves(hand) {
@@ -1153,25 +1184,25 @@ function getPlayableMoves(hand) {
                 if (getCardStrength(move[0]) > fieldStrength) moves.push(move);
             }
             if (fieldQty === 2 && cards.length === 1 && jokers.length > 0) {
-                 const move = [cards[0], jokers[0]];
-                 if (getCardStrength(move[0]) > fieldStrength) moves.push(move);
+                const move = [cards[0], jokers[0]];
+                if (getCardStrength(move[0]) > fieldStrength) moves.push(move);
             }
         }
     });
 
     // 階段
     Object.keys(cardsBySuit).forEach(suit => {
-        const cards = cardsBySuit[suit].sort((a,b) => getRankValue(a) - getRankValue(b));
+        const cards = cardsBySuit[suit].sort((a, b) => getRankValue(a) - getRankValue(b));
         if (cards.length < 3) return;
         for (let i = 0; i < cards.length; i++) {
             let sequence = [cards[i]];
             for (let j = i + 1; j < cards.length; j++) {
-                if (getRankValue(cards[j]) === getRankValue(cards[j-1]) + 1) {
+                if (getRankValue(cards[j]) === getRankValue(cards[j - 1]) + 1) {
                     sequence.push(cards[j]);
                     if (sequence.length >= 3) {
-                         if (fieldQty === 0 || (fieldQty === sequence.length && getCardStrength(sequence[0]) > fieldStrength)) {
-                             moves.push([...sequence]);
-                         }
+                        if (fieldQty === 0 || (fieldQty === sequence.length && getCardStrength(sequence[0]) > fieldStrength)) {
+                            moves.push([...sequence]);
+                        }
                     }
                 } else {
                     break;
@@ -1189,9 +1220,9 @@ function createDialogueElement() {
     if (document.getElementById('dialogue')) return;
     const div = document.createElement('div');
     div.id = 'dialogue';
-    div.style.position = 'fixed'; 
-    div.style.zIndex = '9999'; 
-    
+    div.style.position = 'fixed';
+    div.style.zIndex = '9999';
+
     div.innerHTML = `
         <div class="dialogue-container">
             <div class="dialogue-icon" id="dialogue-icon-container">
@@ -1228,7 +1259,7 @@ function showDialogue(name, text, characterId = null, situation = null) {
             targetSrc = gameState.playerAvatar;
             baseSrc = gameState.playerAvatar;
         } else {
-            targetSrc = ''; 
+            targetSrc = '';
         }
     } else if (characterId && CHARACTERS[characterId]) {
         baseSrc = CHARACTERS[characterId].portrait || '';
@@ -1242,9 +1273,9 @@ function showDialogue(name, text, characterId = null, situation = null) {
     if (targetSrc) {
         imgEl.style.display = 'block';
         fallbackEl.style.display = 'none';
-        
+
         imgEl.src = targetSrc;
-        
+
         imgEl.onerror = function() {
             if (this.src !== baseSrc && baseSrc) {
                 this.src = baseSrc;
@@ -1263,16 +1294,16 @@ function showDialogue(name, text, characterId = null, situation = null) {
     el.style.display = 'block';
     if (el.dataset.visible !== "true") {
         el.classList.remove('pop-in');
-        void el.offsetWidth; 
+        void el.offsetWidth;
         el.classList.add('pop-in');
         el.dataset.visible = "true";
     }
-    
+
     if (el.hideTimer) clearTimeout(el.hideTimer);
     el.hideTimer = setTimeout(() => {
         el.style.display = 'none';
         el.dataset.visible = "false";
-    }, 4000); 
+    }, 4000);
 }
 
 function showNotification(text) {
@@ -1280,7 +1311,9 @@ function showNotification(text) {
     if (!el) return;
     el.textContent = text;
     el.classList.add('show');
-    setTimeout(() => { el.classList.remove('show'); }, 3000);
+    setTimeout(() => {
+        el.classList.remove('show');
+    }, 3000);
 }
 
 function getRandomDialogue(char, type, playerObj) {
@@ -1312,7 +1345,7 @@ const bgmBtn = document.getElementById('bgm-toggle');
 let isBgmPlaying = false;
 
 if (bgmBtn && bgmAudio) {
-    bgmAudio.volume = 0.3; 
+    bgmAudio.volume = 0.3;
 
     bgmBtn.addEventListener('click', () => {
         if (isBgmPlaying) {
@@ -1341,52 +1374,3 @@ function startBgm() {
         });
     }
 }
-
-// ==========================================
-// ★修正: 決定ボタンへワープ＆スクロールロック
-// ==========================================
-const jumpBtn = document.getElementById('modal-jump-btn');
-
-if (jumpBtn) {
-    jumpBtn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // ★内側の箱をスクロールさせる
-        const modalContent = document.querySelector('.character-modal-content');
-        if (modalContent) {
-            modalContent.scrollTo({
-                top: modalContent.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
-    };
-}
-
-// モーダルを開く
-const originalOpenCharacterModal = openCharacterModal;
-openCharacterModal = function(isSpectator) {
-    originalOpenCharacterModal(isSpectator);
-    
-    // 背景ロック（クラスのみ）
-    document.body.classList.add('modal-open');
-    
-    // 矢印を表示
-    if (jumpBtn) {
-        jumpBtn.style.setProperty('display', 'flex', 'important');
-    }
-};
-
-// モーダルを閉じる
-const originalCloseCharacterModalFunc = closeCharacterModalFunc;
-closeCharacterModalFunc = function() {
-    originalCloseCharacterModalFunc();
-    
-    // ロック解除
-    document.body.classList.remove('modal-open');
-    
-    // 矢印を非表示
-    if (jumpBtn) {
-        jumpBtn.style.display = 'none';
-    }
-};
