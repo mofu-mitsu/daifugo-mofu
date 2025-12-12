@@ -353,7 +353,7 @@ html.modal-open, body.modal-open {
     
     #game-container { 
         /* ★上を130px空ける */
-        padding-top: 130px !important;
+        padding-top: 170px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
         padding-bottom: 50px !important;
@@ -372,7 +372,8 @@ html.modal-open, body.modal-open {
 
     h1 { 
         text-align: center;
-        margin-top: 0 !important;
+        /* ★修正: タイトル自体にも少し余白を持たせておく */
+        margin-top: 10px !important;
         margin-bottom: 30px !important;
         font-size: 1.8em; 
         line-height: 1.2;
