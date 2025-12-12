@@ -3,6 +3,11 @@
    ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap');
 
+/* ★追加: これを入れるとサイズ計算が狂わなくなる魔法の呪文 */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --primary-gradient: linear-gradient(135deg, #a777e3, #6e8efb);
     --secondary-gradient: linear-gradient(45deg, #ff9a9e, #fecfef);
@@ -20,12 +25,16 @@ body {
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     margin: 0;
-    padding: 20px;
+    /* ★修正: padding: 20px; を削除！これがズレの原因でした */
+    padding: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     color: var(--text-color);
+    /* 横スクロール防止 */
+    overflow-x: hidden; 
+    width: 100%;
 }
 
 @keyframes gradientBG {
@@ -48,6 +57,8 @@ body {
     width: 95%;
     position: relative;
     min-height: 600px; 
+    /* ★追加: 中央揃えを確実にする */
+    margin: 20px auto; 
 }
 
 h1 {
@@ -205,61 +216,6 @@ button:active { transform: translateY(-2px); }
     background-size: 100% 100%; 
     background-repeat: no-repeat;
     display: inline-block;
-    margin: 5px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.1);
-}
-
-.card:hover {
-    transform: translateY(-20px) scale(1.1);
-    z-index: 100;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-}
-
-.card.selected {
-    transform: translateY(-30px);
-    border: 3px solid var(--accent-color);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
-    z-index: 50; /* 選んだカードを手前に */
-}
-
-/* =========================================
-   フィールドとカード
-   ========================================= */
-/* （上の方はそのままでOK） */
-
-#player-hand {
-    height: 230px;
-    margin: 20px 0;
-    padding: 30px 40px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 30px;
-    display: flex;
-    /* ★修正: 真ん中寄せをやめて、左から並べる（スクロール用） */
-    justify-content: flex-start; 
-    align-items: center;
-    overflow-x: auto; /* 横スクロール許可 */
-    overflow-y: hidden;
-    border: 2px solid white;
-    /* ★修正: gapのマイナス指定は効かないので削除 */
-    /* gap: -40px; */ 
-    
-    /* ★追加: スクロールバーを少しオシャレに */
-    scrollbar-width: thin;
-    white-space: nowrap; /* 改行禁止 */
-}
-
-.card {
-    width: 110px; 
-    height: 160px;
-    border-radius: 12px;
-    background-color: white;
-    background-size: 100% 100%; 
-    background-repeat: no-repeat;
-    display: inline-block;
     
     /* ★修正: カードを重ねる設定 */
     margin-right: -40px; /* 隣のカードを上に被せる */
@@ -279,6 +235,36 @@ button:active { transform: translateY(-2px); }
     margin-right: 20px; 
 }
 
+.card:hover {
+    transform: translateY(-20px) scale(1.1);
+    z-index: 100;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.card.selected {
+    transform: translateY(-30px);
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+    z-index: 50; /* 選んだカードを手前に */
+}
+
+#player-hand {
+    height: 230px;
+    margin: 20px 0;
+    padding: 30px 40px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    display: flex;
+    /* ★修正: 真ん中寄せをやめて、左から並べる（スクロール用） */
+    justify-content: flex-start; 
+    align-items: center;
+    overflow-x: auto; /* 横スクロール許可 */
+    overflow-y: hidden;
+    border: 2px solid white;
+    /* ★追加: スクロールバーを少しオシャレに */
+    scrollbar-width: thin;
+    white-space: nowrap; /* 改行禁止 */
+}
 
 /* =========================================
    ★ここ修正！通知（トースト）の位置★
