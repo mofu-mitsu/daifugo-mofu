@@ -41,7 +41,6 @@ const TRIANGLE_EVENTS = [
           "水兵部として…負けられない戦いだ。"
         ]
       },
-
       "think": {
         "migiwa": [
           "んー…二人の動き読みづらいんよ…でもウチの勢いで押し切ったる！",
@@ -59,7 +58,6 @@ const TRIANGLE_EVENTS = [
           "水兵部三人…それぞれのクセは把握してる。あとはタイミングだ。"
         ]
       },
-
       "play": {
         "migiwa": [
           "ほれっ！ウチの一手じゃ！二人とも止められんじゃろ！？",
@@ -77,7 +75,6 @@ const TRIANGLE_EVENTS = [
           "水兵部の知識担当として…ここは確実にいく。"
         ]
       },
-
       "pressure": {
         "migiwa": [
           "ちょ、二人してウチにプレッシャーかけんでよ！？…でも負けんけぇ！！",
@@ -95,7 +92,6 @@ const TRIANGLE_EVENTS = [
           "プレッシャーは感じるけど…まだ勝ち筋は消えてない。"
         ]
       },
-
       "antiPressure": {
         "migiwa": [
           "ほれっ！ウチの強いやつじゃ！二人とも耐えられる！？",
@@ -113,7 +109,6 @@ const TRIANGLE_EVENTS = [
           "水兵部の分析力…今ここで発揮する。"
         ]
       },
-
       "win": {
         "migiwa": [
           "やったぁぁ！！ウチが一番じゃ！！けついもりょうごも…悔しいじゃろ！？ふふん！！",
@@ -131,7 +126,6 @@ const TRIANGLE_EVENTS = [
           "二人の動き…最終的には読み切れた。データの勝利だ。"
         ]
       },
-
       "lose": {
         "migiwa": [
           "うぅ…負けたぁ…。けついかりょうごが勝ったんか…悔しいわ…！！",
@@ -149,7 +143,6 @@ const TRIANGLE_EVENTS = [
           "データ上では勝てるはずだったんだけど…二人の動きが予測を超えてたな。"
         ]
       },
-
       "rank1": {
         "migiwa": [
           "大富豪じゃ！！水兵部の副部長の実力見せたったで！！",
@@ -167,7 +160,6 @@ const TRIANGLE_EVENTS = [
           "水兵部の分析力…今日は冴えてたな。"
         ]
       },
-
       "rank2": {
         "migiwa": [
           "富豪か…惜しかったわ！けついかりょうごが大富豪取ったんか…！",
@@ -253,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCharacterDefinitions();
     selectCharactersBtn.addEventListener('click', () => openCharacterModal(false));
     spectatorModeBtn.addEventListener('click', () => openCharacterModal(true));
-    createDialogueElement(); // 最初にダイアログの枠を作っておく
+    createDialogueElement();
 });
 
 if (playerImageInput) {
@@ -279,14 +271,11 @@ function loadCharacterDefinitions() {
 }
 
 // 画像プリロード（キャッシュ用）
-// 強力な画像プリロード（DOMに隠して配置する作戦）
 function preloadCharacterImages() {
-    // 既にプリロード用コンテナがあったら作らない
     if (document.getElementById('preload-container')) return;
 
     const preloadContainer = document.createElement('div');
     preloadContainer.id = 'preload-container';
-    // 画面外に飛ばして見えなくする（でもブラウザには描画させる）
     preloadContainer.style.position = 'absolute';
     preloadContainer.style.width = '1px';
     preloadContainer.style.height = '1px';
@@ -298,16 +287,13 @@ function preloadCharacterImages() {
 
     const situations = ['start', 'win', 'lose', 'pressure', 'think', 'play', 'pass', 'revolution', 'joker', 'pair', 'stairs', 'single'];
 
-    // 全キャラの画像をDOMに追加
     Object.values(CHARACTERS).forEach(char => {
         if (!char.portrait) return;
         
-        // 通常画像
         const img = document.createElement('img');
         img.src = char.portrait;
         preloadContainer.appendChild(img);
 
-        // 差分画像
         situations.forEach(sit => {
             const vImg = document.createElement('img');
             vImg.src = char.portrait.replace('.png', `_${sit}.png`);
@@ -490,7 +476,8 @@ function startGame() {
     gameState.isProcessing = false;
     
     setupPlayers();
-    preloadCharacterImages(); // ここで画像を裏読み込み
+    preloadCharacterImages(); 
+    startBgm(); // BGM開始
     startRound();
 }
 
@@ -552,7 +539,6 @@ function startRound() {
     resultModal.style.display = 'none';
     gameScreen.style.display = 'block';
     
-    // ダイアログ要素の確認
     createDialogueElement();
     
     initDeck();
@@ -943,7 +929,9 @@ function playerPass() {
         return;
     }
     showDialogue(gameState.players[0].name, "パスします。", "player", "pass");
-    advanceTurn();
+    setTimeout(() => {
+        advanceTurn();
+    }, 1000);
 }
 
 function executePlay(player, cards, removeTarget) {
@@ -999,8 +987,7 @@ function executePlay(player, cards, removeTarget) {
                  showDialogue(p.name, getRandomDialogue(char, 'antiPressure', p), p.character, 'lose');
              }, delay);
              
-             // ★ここも修正！次の人が喋るまでの間隔を短く
-             delay += 2000; // 3000 -> 2000
+             delay += 2000;
         });
         
         // リアクション終了後に処理続行
@@ -1032,18 +1019,23 @@ function continueExecute(player, cards) {
         
         if (checkWin(player)) return;
 
-        if (player.isHuman || (gameState.isSpectator && player.id === gameState.players[0].id)) {
-            showNotification("8切り！あなたの親番です");
-            updateGameDisplay();
-        } else {
-            showNotification(`8切り！${player.name}の親番です`);
-            setTimeout(aiTurn, 1000);
-        }
+        setTimeout(() => {
+            if (player.isHuman || (gameState.isSpectator && player.id === gameState.players[0].id)) {
+                showNotification("8切り！あなたの親番です");
+                updateGameDisplay();
+            } else {
+                showNotification(`8切り！${player.name}の親番です`);
+                setTimeout(aiTurn, 1000);
+            }
+        }, 1200);
         return; 
     }
 
     if (checkWin(player)) return;
-    advanceTurn();
+    
+    setTimeout(() => {
+        advanceTurn();
+    }, 1200);
 }
 
 function checkWin(player) {
@@ -1135,7 +1127,7 @@ function advanceTurn() {
     updateGameDisplay();
 }
 
-// AIターン処理（スピード調整＋パス修正版）
+// AIターン処理（修正版：プレイヤーパス回避）
 function aiTurn() {
     if (gameState.isProcessing || gameState.isTalking) return; 
 
@@ -1167,14 +1159,14 @@ function aiTurn() {
             showDialogue(aiPlayer.name, getRandomDialogue(charData, 'pass', aiPlayer), aiPlayer.character, 'pass');
             setTimeout(() => {
                 gameState.isProcessing = false;
-                // パス処理へ（ここも少し待ってから進むように変更）
-                playerPass(); 
-            }, 1500); // セリフを読んでから1.5秒後にパス実行
+                // ★修正: playerPass()ではなく、直接次のターンへ進める
+                advanceTurn(); 
+            }, 1500); 
         }, 800);
         return;
     }
 
-    // AI思考（カード選び）
+    // AI思考
     let selectedMove = null;
     playableMoves.sort((a, b) => getCardStrength(a[0]) - getCardStrength(b[0]));
     if (aiParams.aggressiveness > 0.7) {
@@ -1188,7 +1180,7 @@ function aiTurn() {
         selectedMove = playableMoves[idx];
     }
 
-    // ★重要：セリフ -> 待機 -> カード出す
+    // セリフ -> 待機 -> カード出す
     gameState.isProcessing = true; 
     setTimeout(() => {
         let situation = 'play';
@@ -1208,7 +1200,6 @@ function aiTurn() {
 
         showDialogue(aiPlayer.name, getRandomDialogue(charData, situation, aiPlayer), aiPlayer.character, situation);
         
-        // ★修正ポイント：セリフが出てからカードを出すまでの時間を短縮 (1.5秒)
         setTimeout(() => {
             gameState.isProcessing = false; 
             executePlay(aiPlayer, selectedMove, selectedMove);
@@ -1292,7 +1283,6 @@ function getPlayableMoves(hand) {
     return moves;
 }
 
-// ダイアログ要素作成（枠だけ作る）
 function createDialogueElement() {
     if (document.getElementById('dialogue')) return;
     const div = document.createElement('div');
@@ -1300,7 +1290,6 @@ function createDialogueElement() {
     div.style.position = 'fixed'; 
     div.style.zIndex = '9999'; 
     
-    // 中身を空っぽの入れ物として作っておく
     div.innerHTML = `
         <div class="dialogue-container">
             <div class="dialogue-icon" id="dialogue-icon-container">
@@ -1316,7 +1305,6 @@ function createDialogueElement() {
     document.body.appendChild(div);
 }
 
-// ダイアログ表示（中身だけ書き換える＝チラつき防止）
 function showDialogue(name, text, characterId = null, situation = null) {
     const el = document.getElementById('dialogue');
     const nameEl = document.getElementById('dialogue-name-text');
@@ -1326,11 +1314,9 @@ function showDialogue(name, text, characterId = null, situation = null) {
 
     if (!text || !el) return;
 
-    // テキスト更新
     nameEl.textContent = name;
     bodyEl.textContent = text;
 
-    // 画像URLの決定
     let targetSrc = '';
     let baseSrc = '';
     let fallbackChar = name.charAt(0);
@@ -1340,7 +1326,7 @@ function showDialogue(name, text, characterId = null, situation = null) {
             targetSrc = gameState.playerAvatar;
             baseSrc = gameState.playerAvatar;
         } else {
-            targetSrc = ''; // 画像なし、フォールバックへ
+            targetSrc = ''; 
         }
     } else if (characterId && CHARACTERS[characterId]) {
         baseSrc = CHARACTERS[characterId].portrait || '';
@@ -1351,37 +1337,31 @@ function showDialogue(name, text, characterId = null, situation = null) {
         }
     }
 
-    // 画像表示ロジック（エラーハンドリング付き）
     if (targetSrc) {
         imgEl.style.display = 'block';
         fallbackEl.style.display = 'none';
         
-        // ここでsrcを入れると読み込み開始
         imgEl.src = targetSrc;
         
-        // 読み込みエラー（404など）ならベース画像に戻す
         imgEl.onerror = function() {
             if (this.src !== baseSrc && baseSrc) {
                 this.src = baseSrc;
             } else {
-                // ベース画像もダメならフォールバック（文字アイコン）
                 this.style.display = 'none';
                 fallbackEl.textContent = fallbackChar;
                 fallbackEl.style.display = 'flex';
             }
         };
     } else {
-        // 最初から画像がない場合
         imgEl.style.display = 'none';
         fallbackEl.textContent = fallbackChar;
         fallbackEl.style.display = 'flex';
     }
 
-    // 表示アニメーション
     el.style.display = 'block';
     if (el.dataset.visible !== "true") {
         el.classList.remove('pop-in');
-        void el.offsetWidth; // リフロー
+        void el.offsetWidth; 
         el.classList.add('pop-in');
         el.dataset.visible = "true";
     }
@@ -1429,9 +1409,8 @@ const bgmAudio = document.getElementById('bgm-audio');
 const bgmBtn = document.getElementById('bgm-toggle');
 let isBgmPlaying = false;
 
-// BGMボタンのクリックイベント
 if (bgmBtn && bgmAudio) {
-    bgmAudio.volume = 0.3; // 音量は控えめに（0.0〜1.0）
+    bgmAudio.volume = 0.3; 
 
     bgmBtn.addEventListener('click', () => {
         if (isBgmPlaying) {
@@ -1440,7 +1419,6 @@ if (bgmBtn && bgmAudio) {
             bgmBtn.classList.remove('playing');
             bgmBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
         } else {
-            // ユーザーアクションが必要なのでここで再生
             bgmAudio.play().then(() => {
                 isBgmPlaying = true;
                 bgmBtn.classList.add('playing');
@@ -1450,7 +1428,6 @@ if (bgmBtn && bgmAudio) {
     });
 }
 
-// ゲーム開始時にBGMを自動再生（ユーザーアクション後なら許可されることが多い）
 function startBgm() {
     if (bgmAudio && !isBgmPlaying) {
         bgmAudio.play().then(() => {
@@ -1464,32 +1441,36 @@ function startBgm() {
 }
 
 // ==========================================
-// ★追加: 決定ボタンへワープ
+// ★修正: 決定ボタンへワープ＆背景ロック
 // ==========================================
 const jumpBtn = document.getElementById('modal-jump-btn');
 
 if (jumpBtn) {
     jumpBtn.onclick = () => {
-        const modalContent = document.querySelector('.character-modal-content');
-        if (modalContent) {
-            modalContent.scrollTo({
-                top: modalContent.scrollHeight,
+        // ★修正: モーダル全体ではなく、キャラ一覧エリアをスクロールさせる
+        const grid = document.getElementById('character-grid');
+        if (grid) {
+            grid.scrollTo({
+                top: grid.scrollHeight,
                 behavior: 'smooth'
             });
         }
     };
 }
 
-// モーダルを開く時・閉じる時にボタンの表示を切り替え
-// (既存の openCharacterModal 関数の中に追加してね)
+// モーダルを開く時・閉じる時にボタンの表示と背景ロックを切り替え
 const originalOpenCharacterModal = openCharacterModal;
 openCharacterModal = function(isSpectator) {
     originalOpenCharacterModal(isSpectator);
+    // ★修正: 背景スクロールをロック
+    document.body.classList.add('modal-open');
     if (jumpBtn) jumpBtn.style.display = 'flex';
 };
 
 const originalCloseCharacterModalFunc = closeCharacterModalFunc;
 closeCharacterModalFunc = function() {
     originalCloseCharacterModalFunc();
+    // ★修正: 背景ロック解除
+    document.body.classList.remove('modal-open');
     if (jumpBtn) jumpBtn.style.display = 'none';
 };
