@@ -18,164 +18,56 @@ const CLASS_2_2 = [
     "makishi", "shige", "hakomo", "shizuka", "mirin", "yuzu", "shinon", "hikari", "kozue", "yamato"
 ];
 
-// トリプルイベント定義
+// トリプルイベント定義（省略なし）
 const TRIANGLE_EVENTS = [
   {
     "id": "migiwa_ketsui_ryogo",
     "characters": ["migiwa", "ketsui", "ryogo"],
     "lines": {
       "start": {
-        "migiwa": [
-          "ちょ、二人してウチの相手すんの！？水兵部三つ巴バトルじゃな！！",
-          "けついもりょうごも本気顔しとるけど…ウチが一番に上がるけぇ覚悟しとき！！",
-          "水兵部の誇り…今日はウチが守ったるけぇな！！"
-        ],
-        "ketsui": [
-          "ほいほい…水兵部三人揃うとかエモいのぉ。船長として負けられんわ。",
-          "みぎわもりょうごも、ええ顔しとるの。ほうじゃけぇワシも燃えるんよ。",
-          "水兵部の威信かけて…全力でやらせてもらうで。"
-        ],
-        "ryogo": [
-          "水兵部三人か…データ上、この組み合わせは接戦になる確率が高いな。",
-          "けついの直感とみぎわの勢い…両方同時は情報量多いけど、勝ち筋は見えてる。",
-          "水兵部として…負けられない戦いだ。"
-        ]
+        "migiwa": [ "ちょ、二人してウチの相手すんの！？水兵部三つ巴バトルじゃな！！", "けついもりょうごも本気顔しとるけど…ウチが一番に上がるけぇ覚悟しとき！！", "水兵部の誇り…今日はウチが守ったるけぇな！！" ],
+        "ketsui": [ "ほいほい…水兵部三人揃うとかエモいのぉ。船長として負けられんわ。", "みぎわもりょうごも、ええ顔しとるの。ほうじゃけぇワシも燃えるんよ。", "水兵部の威信かけて…全力でやらせてもらうで。" ],
+        "ryogo": [ "水兵部三人か…データ上、この組み合わせは接戦になる確率が高いな。", "けついの直感とみぎわの勢い…両方同時は情報量多いけど、勝ち筋は見えてる。", "水兵部として…負けられない戦いだ。" ]
       },
       "think": {
-        "migiwa": [
-          "んー…二人の動き読みづらいんよ…でもウチの勢いで押し切ったる！",
-          "けついとりょうご、どっちも油断ならんけぇ…慎重にいかな…。",
-          "水兵部の仲間じゃけど…今は敵じゃけぇな…ふふん！"
-        ],
-        "ketsui": [
-          "みぎわの勢いとりょうごの読み…両方警戒せなアカンのぉ。",
-          "二人の動き見とったら…こっちの手が読めるかもしれんわ。",
-          "船長として…ここは慎重にいくで。"
-        ],
-        "ryogo": [
-          "二人の手札…まだ読み切れてない。もう少し情報が必要だ。",
-          "けついの直感ムーブとみぎわの勢い任せ…対照的すぎて予測が難しい。",
-          "水兵部三人…それぞれのクセは把握してる。あとはタイミングだ。"
-        ]
+        "migiwa": [ "んー…二人の動き読みづらいんよ…でもウチの勢いで押し切ったる！", "けついとりょうご、どっちも油断ならんけぇ…慎重にいかな…。", "水兵部の仲間じゃけど…今は敵じゃけぇな…ふふん！" ],
+        "ketsui": [ "みぎわの勢いとりょうごの読み…両方警戒せなアカンのぉ。", "二人の動き見とったら…こっちの手が読めるかもしれんわ。", "船長として…ここは慎重にいくで。" ],
+        "ryogo": [ "二人の手札…まだ読み切れてない。もう少し情報が必要だ。", "けついの直感ムーブとみぎわの勢い任せ…対照的すぎて予測が難しい。", "水兵部三人…それぞれのクセは把握してる。あとはタイミングだ。" ]
       },
       "play": {
-        "migiwa": [
-          "ほれっ！ウチの一手じゃ！二人とも止められんじゃろ！？",
-          "水兵部の勢い、見せたるけぇ！！",
-          "けついもりょうごも…この手は読めんかったじゃろ！？ふふん！"
-        ],
-        "ketsui": [
-          "ほいじゃあ…船長の一手、見せたるで。",
-          "みぎわもりょうごも…ワシの動き、読めとるか？",
-          "水兵部の船長として…ここは譲れんのぉ。"
-        ],
-        "ryogo": [
-          "計算通り…この手が最適解だ。",
-          "二人の動き…予測範囲内。僕の勝ち筋は崩れてない。",
-          "水兵部の知識担当として…ここは確実にいく。"
-        ]
+        "migiwa": [ "ほれっ！ウチの一手じゃ！二人とも止められんじゃろ！？", "水兵部の勢い、見せたるけぇ！！", "けついもりょうごも…この手は読めんかったじゃろ！？ふふん！" ],
+        "ketsui": [ "ほいじゃあ…船長の一手、見せたるで。", "みぎわもりょうごも…ワシの動き、読めとるか？", "水兵部の船長として…ここは譲れんのぉ。" ],
+        "ryogo": [ "計算通り…この手が最適解だ。", "二人の動き…予測範囲内。僕の勝ち筋は崩れてない。", "水兵部の知識担当として…ここは確実にいく。" ]
       },
       "pressure": {
-        "migiwa": [
-          "ちょ、二人してウチにプレッシャーかけんでよ！？…でも負けんけぇ！！",
-          "強いの来たけど…ウチの勢いは止まらんけぇな！！",
-          "けついもりょうごも本気出しすぎじゃろ！？…ウチも本気出したる！！"
-        ],
-        "ketsui": [
-          "おいおい…二人して本気出すとか反則じゃろ？まぁええけぇ、受けて立つで。",
-          "みぎわもりょうごも…ええ攻めしよるの。船長として負けられんわ。",
-          "こりゃあ手加減しとったら沈むわ…全力でいくで。"
-        ],
-        "ryogo": [
-          "二人同時に強い手…さすがに厳しいな。でも諦めない。",
-          "けついの直感とみぎわの勢い…その衝突点こそ僕の入り込む余地だ。",
-          "プレッシャーは感じるけど…まだ勝ち筋は消えてない。"
-        ]
+        "migiwa": [ "ちょ、二人してウチにプレッシャーかけんでよ！？…でも負けんけぇ！！", "強いの来たけど…ウチの勢いは止まらんけぇな！！", "けついもりょうごも本気出しすぎじゃろ！？…ウチも本気出したる！！" ],
+        "ketsui": [ "おいおい…二人して本気出すとか反則じゃろ？まぁええけぇ、受けて立つで。", "みぎわもりょうごも…ええ攻めしよるの。船長として負けられんわ。", "こりゃあ手加減しとったら沈むわ…全力でいくで。" ],
+        "ryogo": [ "二人同時に強い手…さすがに厳しいな。でも諦めない。", "けついの直感とみぎわの勢い…その衝突点こそ僕の入り込む余地だ。", "プレッシャーは感じるけど…まだ勝ち筋は消えてない。" ]
       },
       "antiPressure": {
-        "migiwa": [
-          "ほれっ！ウチの強いやつじゃ！二人とも耐えられる！？",
-          "水兵部の勢い…見せたるけぇな！！",
-          "けついもりょうごも…このプレッシャー、受け止めてみぃ！！"
-        ],
-        "ketsui": [
-          "ほいじゃあ…船長の本気、見せたるで。",
-          "みぎわもりょうごも…ワシの攻め、止められるか？",
-          "水兵部の船長として…ここは強気でいくで。"
-        ],
-        "ryogo": [
-          "計算上、この手が最も効果的だ。二人とも…耐えられるかな？",
-          "けついとみぎわ…この圧、受け止めてもらうよ。",
-          "水兵部の分析力…今ここで発揮する。"
-        ]
+        "migiwa": [ "ほれっ！ウチの強いやつじゃ！二人とも耐えられる！？", "水兵部の勢い…見せたるけぇな！！", "けついもりょうごも…このプレッシャー、受け止めてみぃ！！" ],
+        "ketsui": [ "ほいじゃあ…船長の本気、見せたるで。", "みぎわもりょうごも…ワシの攻め、止められるか？", "水兵部の船長として…ここは強気でいくで。" ],
+        "ryogo": [ "計算上、この手が最も効果的だ。二人とも…耐えられるかな？", "けついとみぎわ…この圧、受け止めてもらうよ。", "水兵部の分析力…今ここで発揮する。" ]
       },
       "win": {
-        "migiwa": [
-          "やったぁぁ！！ウチが一番じゃ！！けついもりょうごも…悔しいじゃろ！？ふふん！！",
-          "水兵部の誇り…ウチが守ったで！！",
-          "ほれ見ぃ！ウチの勢いは本物じゃったろ！？二人とも次は頑張りぃや！！"
-        ],
-        "ketsui": [
-          "ほいほい…船長の勝ちじゃの。みぎわもりょうごも、ようやったで。",
-          "水兵部の船長として…当然の結果じゃの。ふふん。",
-          "二人とも強かったけぇ…ワシも本気出さなアカンかったわ。ええ勝負じゃったで。"
-        ],
-        "ryogo": [
-          "勝てた…計算通りだ。けついとみぎわ…強敵だったよ。",
-          "水兵部の知識担当として…面目を保てた。",
-          "二人の動き…最終的には読み切れた。データの勝利だ。"
-        ]
+        "migiwa": [ "やったぁぁ！！ウチが一番じゃ！！けついもりょうごも…悔しいじゃろ！？ふふん！！", "水兵部の誇り…ウチが守ったで！！", "ほれ見ぃ！ウチの勢いは本物じゃったろ！？二人とも次は頑張りぃや！！" ],
+        "ketsui": [ "ほいほい…船長の勝ちじゃの。みぎわもりょうごも、ようやったで。", "水兵部の船長として…当然の結果じゃの。ふふん。", "二人とも強かったけぇ…ワシも本気出さなアカンかったわ。ええ勝負じゃったで。" ],
+        "ryogo": [ "勝てた…計算通りだ。けついとみぎわ…強敵だったよ。", "水兵部の知識担当として…面目を保てた。", "二人の動き…最終的には読み切れた。データの勝利だ。" ]
       },
       "lose": {
-        "migiwa": [
-          "うぅ…負けたぁ…。けついかりょうごが勝ったんか…悔しいわ…！！",
-          "水兵部の誇り…守れんかった…次は絶対勝つけぇな！！",
-          "ちくしょー！！二人とも強すぎじゃろ！？…でも次は負けんけぇ！！"
-        ],
-        "ketsui": [
-          "やられたのぉ…。みぎわかりょうごが勝ったんか…船長として不甲斐ないわ。",
-          "水兵部の船長が負けるとか…悔しいけぇ、次は絶対勝つで。",
-          "ほぅ…やるのぉ。次はワシが本気出させてもらうけぇな。"
-        ],
-        "ryogo": [
-          "負けた…計算ミスか。けついかみぎわが勝ったんだな…認めるよ。",
-          "水兵部として…負けられない戦いだったのに…次は修正する。",
-          "データ上では勝てるはずだったんだけど…二人の動きが予測を超えてたな。"
-        ]
+        "migiwa": [ "うぅ…負けたぁ…。けついかりょうごが勝ったんか…悔しいわ…！！", "水兵部の誇り…守れんかった…次は絶対勝つけぇな！！", "ちくしょー！！二人とも強すぎじゃろ！？…でも次は負けんけぇ！！" ],
+        "ketsui": [ "やられたのぉ…。みぎわかりょうごが勝ったんか…船長として不甲斐ないわ。", "水兵部の船長が負けるとか…悔しいけぇ、次は絶対勝つで。", "ほぅ…やるのぉ。次はワシが本気出させてもらうけぇな。" ],
+        "ryogo": [ "負けた…計算ミスか。けついかみぎわが勝ったんだな…認めるよ。", "水兵部として…負けられない戦いだったのに…次は修正する。", "データ上では勝てるはずだったんだけど…二人の動きが予測を超えてたな。" ]
       },
       "rank1": {
-        "migiwa": [
-          "大富豪じゃ！！水兵部の副部長の実力見せたったで！！",
-          "けついもりょうごも…ウチの勢いには勝てんかったじゃろ！？ふふん！！",
-          "水兵部三人の中で一番！！誇らしいわ〜💕"
-        ],
-        "ketsui": [
-          "大富豪じゃの。船長として当然の結果じゃわ。",
-          "みぎわもりょうごも…まだまだ修行が足りんのぉ。ふふん。",
-          "水兵部の船長の貫禄…見せたったで。"
-        ],
-        "ryogo": [
-          "大富豪…計算が完璧だった証拠だ。",
-          "けついとみぎわ…君たちの動き、全て読み切った。",
-          "水兵部の分析力…今日は冴えてたな。"
-        ]
+        "migiwa": [ "大富豪じゃ！！水兵部の副部長の実力見せたったで！！", "けついもりょうごも…ウチの勢いには勝てんかったじゃろ！？ふふん！！", "水兵部三人の中で一番！！誇らしいわ〜💕" ],
+        "ketsui": [ "大富豪じゃの。船長として当然の結果じゃわ。", "みぎわもりょうごも…まだまだ修行が足りんのぉ。ふふん。", "水兵部の船長の貫禄…見せたったで。" ],
+        "ryogo": [ "大富豪…計算が完璧だった証拠だ。", "けついとみぎわ…君たちの動き、全て読み切った。", "水兵部の分析力…今日は冴えてたな。" ]
       },
       "rank2": {
-        "migiwa": [
-          "富豪か…惜しかったわ！けついかりょうごが大富豪取ったんか…！",
-          "二位…悔しいけど、水兵部三人で上位独占はええ感じじゃな！",
-          "次は絶対大富豪取るけぇな！！"
-        ],
-        "ketsui": [
-          "富豪じゃの。惜しかったわ…みぎわかりょうごが大富豪か。",
-          "二位…船長としては不本意じゃけど、水兵部が上位なんはええことじゃの。",
-          "次は絶対一位取るで。"
-        ],
-        "ryogo": [
-          "富豪…計算が甘かったな。けついかみぎわが大富豪か。",
-          "二位…悔しいけど、水兵部の面目は保てた。",
-          "次は修正して大富豪を取る。"
-        ]
+        "migiwa": [ "富豪か…惜しかったわ！けついかりょうごが大富豪取ったんか…！", "二位…悔しいけど、水兵部三人で上位独占はええ感じじゃな！", "次は絶対大富豪取るけぇな！！" ],
+        "ketsui": [ "富豪じゃの。惜しかったわ…みぎわかりょうごが大富豪か。", "二位…船長としては不本意じゃけど、水兵部が上位なんはええことじゃの。", "次は絶対一位取るで。" ],
+        "ryogo": [ "富豪…計算が甘かったな。けついかみぎわが大富豪か。", "二位…悔しいけど、水兵部の面目は保てた。", "次は修正して大富豪を取る。" ]
       }
     }
   }
@@ -304,7 +196,7 @@ function preloadCharacterImages() {
 }
 
 // ==========================================
-// キャラ選択（★ここ修正：CSSで制御しやすいように変更）
+// キャラ選択
 // ==========================================
 let tempSelectedCharacters = []; 
 let isSelectingForSpectator = false;
@@ -320,8 +212,10 @@ function openCharacterModal(isSpectator) {
     renderCharacterGrid();
     updateModalSelectionDisplay();
     
-    // 背景ロック＆矢印表示
+    // ★修正: CSSクラスだけで制御する（JSでのスタイル操作は削除）
     document.body.classList.add('modal-open');
+    
+    // 矢印ボタンを表示
     if (jumpBtn) jumpBtn.style.display = 'flex';
 
     const firstId = Object.keys(CHARACTERS)[0];
@@ -330,7 +224,11 @@ function openCharacterModal(isSpectator) {
 
 function closeCharacterModalFunc() {
     characterModal.style.display = 'none';
+    
+    // ★修正: ロック解除
     document.body.classList.remove('modal-open');
+    
+    // 矢印ボタンを非表示
     if (jumpBtn) jumpBtn.style.display = 'none';
 }
 
@@ -362,13 +260,10 @@ function renderCharacterGrid() {
 
             card.innerHTML = `${imgTag}${fallbackAvatar}<div style="font-weight:bold;">${charData.name}</div><div style="font-size:0.8em;color:#666;">${charData.MBTI}</div>`;
             
-            // ★修正: クリックした時だけ選択＆プロフ表示にする（マウスオーバー削除）
             card.onclick = () => {
                 toggleCharacterSelection(id, card);
-                showCharacterDetails(charData); // クリック時に詳細表示
+                showCharacterDetails(charData);
             };
-            
-            // card.onmouseenter = ... は削除！
             
             gridContainer.appendChild(card);
         });
@@ -402,7 +297,6 @@ function updateModalSelectionDisplay() {
     const required = isSelectingForSpectator ? 4 : 1;
     
     if (tempSelectedCharacters.length < required) {
-        selectedCharactersList.innerHTML = `<span style="color:#888;">${isSelectingForSpectator ? '4人選んでください' : '対戦相手を選んでください'}</span>`;
         confirmSelectionBtn.disabled = true;
     } else {
         confirmSelectionBtn.disabled = false;
@@ -1137,7 +1031,7 @@ function advanceTurn() {
     updateGameDisplay();
 }
 
-// AIターン処理（★修正：プレイヤーのパス処理を回避して、AIが自分で喋る）
+// AIターン処理（★修正：フリーズ対策）
 function aiTurn() {
     if (gameState.isProcessing || gameState.isTalking) return; 
 
@@ -1155,29 +1049,27 @@ function aiTurn() {
     const charData = CHARACTERS[aiPlayer.character];
     const aiParams = charData ? (charData.aiParams || { aggressiveness: 0.5 }) : { aggressiveness: 0.5 };
 
-    // 思考中セリフ
     if (Math.random() < 0.4) {
         showDialogue(aiPlayer.name, getRandomDialogue(charData, 'think', aiPlayer), aiPlayer.character, 'think');
     }
 
     const playableMoves = getPlayableMoves(aiPlayer.hand);
 
-    // パスの場合（★ここを修正）
+    // パスの場合（フリーズ防止のため確実に次のターンへ）
     if (playableMoves.length === 0) {
         gameState.isProcessing = true;
         setTimeout(() => {
-            // キャラクター自身のセリフでパス
             showDialogue(aiPlayer.name, getRandomDialogue(charData, 'pass', aiPlayer), aiPlayer.character, 'pass');
             setTimeout(() => {
                 gameState.isProcessing = false;
-                // playerPass() ではなく、直接 advanceTurn() を呼ぶことで「プレイヤーのパス処理」を回避
+                // AI用のパス処理（プレイヤーと共有しない）
                 advanceTurn(); 
             }, 1500); 
         }, 800);
         return;
     }
 
-    // AI思考
+    // AI思考（カード選び）
     let selectedMove = null;
     playableMoves.sort((a, b) => getCardStrength(a[0]) - getCardStrength(b[0]));
     if (aiParams.aggressiveness > 0.7) {
@@ -1191,7 +1083,6 @@ function aiTurn() {
         selectedMove = playableMoves[idx];
     }
 
-    // セリフ -> 待機 -> カード出す
     gameState.isProcessing = true; 
     setTimeout(() => {
         let situation = 'play';
@@ -1452,7 +1343,7 @@ function startBgm() {
 }
 
 // ==========================================
-// ★修正: 決定ボタンへワープ＆最強のスクロールロック
+// ★修正: 決定ボタンへワープ＆スクロールロック
 // ==========================================
 const jumpBtn = document.getElementById('modal-jump-btn');
 
@@ -1461,7 +1352,7 @@ if (jumpBtn) {
         e.preventDefault();
         e.stopPropagation();
         
-        // 内側の箱をスクロールさせる
+        // ★内側の箱をスクロールさせる
         const modalContent = document.querySelector('.character-modal-content');
         if (modalContent) {
             modalContent.scrollTo({
@@ -1472,22 +1363,13 @@ if (jumpBtn) {
     };
 }
 
-// 現在のスクロール位置を保存する変数
-let scrollPosition = 0;
-
 // モーダルを開く
 const originalOpenCharacterModal = openCharacterModal;
 openCharacterModal = function(isSpectator) {
     originalOpenCharacterModal(isSpectator);
     
-    // ★現在のスクロール位置を保存
-    scrollPosition = window.pageYOffset;
-    
-    // ★bodyを物理的に固定（これで外側は絶対に動かない）
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
+    // 背景ロック（クラスのみ）
+    document.body.classList.add('modal-open');
     
     // 矢印を表示
     if (jumpBtn) {
@@ -1500,16 +1382,11 @@ const originalCloseCharacterModalFunc = closeCharacterModalFunc;
 closeCharacterModalFunc = function() {
     originalCloseCharacterModalFunc();
     
-    // ★固定を解除してスクロール位置を戻す
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-    window.scrollTo(0, scrollPosition);
+    // ロック解除
+    document.body.classList.remove('modal-open');
     
     // 矢印を非表示
     if (jumpBtn) {
         jumpBtn.style.display = 'none';
     }
 };
-
