@@ -342,13 +342,13 @@ html.modal-open, body.modal-open {
 .dialogue-text { font-size: 1.1rem; font-weight: bold; color: #333; }
 
 /* =========================================
-   ★修正: スマホ対応（完全版）
+   ★修正: スマホ対応（スクロール修正版）
    ========================================= */
 @media (max-width: 768px) {
-    /* ベースのリセット */
+    /* ▼▼ 修正箇所：overflow: hidden を削除！ ▼▼ */
     html, body {
         height: 100%;
-        overflow: hidden; /* body自体のスクロールを止める */
+        /* overflow: hidden;  ←これを消す！！ */
     }
     
     #game-container { 
@@ -358,41 +358,36 @@ html.modal-open, body.modal-open {
         border-radius: 0;
         border: none;
         margin: 0;
-        overflow-y: auto; /* ゲーム画面自体はスクロール可能に */
+        /* overflow-y: auto; ←これも消してOK（自然に任せる） */
     }
 
-    /* === モーダル設定（黒い空白削除＆スクロール修正） === */
+    /* === 以下は変更なし（そのまま残して！） === */
     .modal {
         padding: 0 !important;
         align-items: flex-start !important;
-        background-color: rgba(255, 255, 255, 1) !important; /* 背景を白で塗りつぶす */
+        background-color: rgba(255, 255, 255, 1) !important;
     }
 
     .modal-content, .character-modal-content {
         width: 100% !important;
-        height: 100dvh !important; /* 画面の高さピッタリ */
+        height: 100dvh !important;
         max-height: none !important;
         margin: 0 !important;
         border-radius: 0 !important;
         top: 0 !important;
         left: 0 !important;
         border: none !important;
-        
         padding-top: 80px !important;
         padding-bottom: 150px !important; 
-        
-        overflow-y: auto !important; /* 中身だけスクロール */
+        overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
     }
     
-    /* === 閉じるボタン（強制表示） === */
     .close {
-        position: fixed !important; /* 画面に固定 */
+        position: fixed !important;
         top: 15px !important;
         left: 15px !important;
-        z-index: 2147483647 !important; /* 最強にする */
-        
-        /* 押しやすく、見やすく */
+        z-index: 2147483647 !important;
         background: rgba(255, 255, 255, 0.9);
         width: 44px; height: 44px;
         border-radius: 50%;
@@ -403,13 +398,11 @@ html.modal-open, body.modal-open {
         display: block !important;
     }
 
-    /* === 矢印ボタン（スマホ用位置） === */
     #modal-jump-btn { 
-        top: 130px !important; /* PCと同じく少し下げる */
+        top: 130px !important;
         right: 20px !important;
     }
     
-    /* レイアウト調整 */
     h1 { font-size: 2em; margin-bottom: 20px; }
     .card { width: 80px; height: 120px; margin-right: -35px; }
     #player-hand { height: 180px; padding: 10px 20px; justify-content: flex-start; }
