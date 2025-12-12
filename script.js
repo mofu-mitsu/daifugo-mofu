@@ -656,26 +656,68 @@ function checkTriangleEvents() {
     return false;
 }
 
+// ==========================================
+// ★修正: カード交換（何をもらったか通知する強化版）
+// ==========================================
 function performCardExchange() {
     gameState.isTalking = true;
     const playersByRank = {};
+    
+    // 前回の順位をもとにプレイヤーを特定
     gameState.players.forEach(p => {
         const r = gameState.prevRanks[p.id];
         if (r !== undefined) playersByRank[r] = p;
     });
 
     let delay = 0;
-    const processExchange = (winnerRank, loserRank, winCount, loseCount) => {
+
+    // 交換処理を行う内部関数
+    const processExchange = (winnerRank, loserRank, count) => {
         const winner = playersByRank[winnerRank];
         const loser = playersByRank[loserRank];
+        
+        // どちらかがいない（初回など）場合はスキップ
         if (!winner || !loser) return;
 
+        // 手札を「強さ順」に整列させる（念のため）
+        // 左(0)が最弱(3)、右(length-1)が最強(Joker)
+        sortHand(winner.hand);
+        sortHand(loser.hand);
+
+        // --- カードを選ぶ ---
+        // 勝者が出すカード：弱いカード（配列の最初から count 枚）
+        const giveToLoser = winner.hand.slice(0, count);
+        
+        // 敗者が出すカード：強いカード（配列の最後から count 枚）
+        const giveToWinner = loser.hand.slice(loser.hand.length - count);
+
+        // --- 交換実行 ---
+        exchangeCards(winner, loser, giveToLoser, giveToWinner);
+        
+        // 手札を再ソート（これをしないと表示順が変になる）
+        sortHand(winner.hand);
+        sortHand(loser.hand);
+
+        // --- ★追加: 何をもらったか通知する（人間プレイヤー関連のみ） ---
+        if (winner.isHuman) {
+            const cardNames = giveToWinner.map(c => getCardNameJP(c)).join('」と「');
+            setTimeout(() => {
+                showNotification(`${loser.name}から「${cardNames}」を貰いました！`);
+            }, delay + 1000);
+        } else if (loser.isHuman) {
+            const cardNames = giveToLoser.map(c => getCardNameJP(c)).join('」と「');
+            setTimeout(() => {
+                showNotification(`${winner.name}から「${cardNames}」が返ってきました…`);
+            }, delay + 1000);
+        }
+
+        // --- セリフ再生 ---
         if (!winner.isHuman) {
             setTimeout(() => {
                 const char = CHARACTERS[winner.character];
                 showDialogue(winner.name, getRandomDialogue(char, 'tributeReceive', winner), winner.character, 'win');
             }, delay);
-            delay += 4000;
+            delay += 3000;
         }
 
         if (!loser.isHuman) {
@@ -683,26 +725,43 @@ function performCardExchange() {
                 const char = CHARACTERS[loser.character];
                 showDialogue(loser.name, getRandomDialogue(char, 'tributeGive', loser), loser.character, 'lose');
             }, delay);
-            delay += 4000;
+            delay += 3000;
         }
-
-        const giveToLoser = winner.hand.slice(0, winCount);
-        const giveToWinner = loser.hand.slice(loser.hand.length - loseCount);
-        exchangeCards(winner, loser, giveToLoser, giveToWinner);
     };
 
-    processExchange(0, 3, 2, 2);
-    processExchange(1, 2, 1, 1);
+    // 大富豪(0位) <-> 大貧民(3位) : 2枚交換
+    processExchange(0, 3, 2);
+    
+    // 富豪(1位) <-> 貧民(2位) : 1枚交換
+    processExchange(1, 2, 1);
+    
+    // 画面更新
+    updateGameDisplay();
 
+    // 次の処理へ
     setTimeout(() => {
-        gameState.players.forEach(p => sortHand(p.hand));
         showNotification("都落ち/カード交換が行われました");
+        
         setTimeout(() => {
-            gameState.isTalking = false;
-            playStartVoices();
-            showNotification(`第${gameState.round}回戦 スタート！`);
+             gameState.isTalking = false;
+             playStartVoices(); 
+             showNotification(`第${gameState.round}回戦 スタート！`);
         }, 2000);
-    }, delay + 500);
+        
+    }, delay + 2000);
+}
+
+// ★追加: カード名を日本語にする便利関数（通知用）
+function getCardNameJP(card) {
+    if (card === JOKER) return "Joker";
+    if (card === RED_JOKER) return "Joker";
+    
+    const rank = card.split('_of_')[0];
+    const rankMap = {
+        '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '10': '10',
+        'jack': 'J', 'queen': 'Q', 'king': 'K', 'ace': 'A', '2': '2'
+    };
+    return rankMap[rank] || rank;
 }
 
 function exchangeCards(p1, p2, cardsFromP1, cardsFromP2) {
