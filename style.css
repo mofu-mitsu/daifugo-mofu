@@ -180,7 +180,7 @@ button:active { transform: translateY(-2px); }
 }
 
 /* =========================================
-   モーダル共通（全画面対応版）
+   モーダル共通（全画面対応・レイアウト修正版）
    ========================================= */
 .modal {
     display: none;
@@ -190,18 +190,15 @@ button:active { transform: translateY(-2px); }
     width: 100%; height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
-    
-    /* 中央揃え */
     justify-content: center;
     align-items: center;
-    
-    /* ★重要: モーダル枠自体のスクロールは禁止 */
-    overflow: hidden; 
+    overflow: hidden; /* モーダル自体のスクロールは禁止 */
 }
+
 /* JSでクラスがついたら背景（body）のスクロールを止める */
 body.modal-open {
     overflow: hidden;
-    position: fixed; /* スマホでのスクロールロックを強力に */
+    position: fixed;
     width: 100%;
 }
 
@@ -209,14 +206,13 @@ body.modal-open {
     display: flex !important;
 }
 
-/* モーダルの箱（ここだけをスクロールさせる！） */
+/* モーダルの箱（ここを基準にする） */
 .modal-content, .character-modal-content {
     background: rgba(255, 255, 255, 0.98);
     margin: 0;
     padding: 20px;
     border-radius: 20px;
     
-    /* ★画面いっぱいに広げる */
     width: 95%;
     max-width: 1000px;
     height: 90vh; /* 高さ固定 */
@@ -225,62 +221,92 @@ body.modal-open {
     position: relative;
     border: 1px solid white;
     
-    /* ★ここ重要: この箱の中にだけスクロールバーを出す */
-    overflow-y: auto; 
-    display: block; 
+    /* フレックスボックスで上下配置 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 閉じるボタン */
+.close {
+    color: #aaa;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    /* 絶対配置で右上に固定 */
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    z-index: 100;
+}
+.close:hover { color: #ff6b6b; }
+
+/* =========================================
+   キャラ選択画面（レイアウト調整）
+   ========================================= */
+.character-modal-content > h2 {
+    margin-top: 10px;
+    text-align: center;
+    flex-shrink: 0; /* タイトルは縮めない */
+}
+
+/* ★スクロールエリア（ここだけをスクロールさせる！） */
+#character-grid {
+    flex-grow: 1; /* 余ったスペースを全部使う */
+    overflow-y: auto; /* 縦スクロール許可 */
+    padding: 10px 0;
     
     /* スクロールバー装飾 */
     scrollbar-width: thin;
     scrollbar-color: #cbaaca #f1f1f1;
 }
 
-@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-
-.close {
-    color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer;
-    transition: color 0.3s; position: absolute; right: 20px; top: 15px; z-index: 100;
-}
-.close:hover { color: #ff6b6b; }
-
-/* =========================================
-   キャラ選択画面（固定なし・自然なスクロール）
-   ========================================= */
-.character-modal-content > h2 { margin-top: 20px; text-align: center; }
-
-/* 中身の要素はスクロールさせない（親に合わせて伸びるだけ） */
-#character-grid {
-    overflow: visible; 
-    height: auto;
-    padding-bottom: 20px;
-}
-
+/* プロフエリア（高さを制限してコンパクトに） */
 .character-details {
-    margin: 20px 0; display: flex; align-items: center; gap: 20px;
-    background: #f8f9fa; border-radius: 20px; padding: 20px; border: 2px solid #eee;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 15px;
+    border: 2px solid #eee;
+    
+    /* ★重要: 高さを制限して、中身が多い時はスクロール */
+    max-height: 200px; 
+    overflow-y: auto;
+    flex-shrink: 0; /* 潰れないようにする */
 }
 
-/* 決定ボタンエリア（一番下に配置） */
+/* 決定ボタンエリア（下に固定表示） */
 .selected-characters {
-    position: static;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 30px 0; /* 下に余白 */
-    margin-top: 20px;
-    text-align: center;
+    flex-shrink: 0; /* 縮めない */
+    background: white;
     border-top: 2px dashed #ddd;
+    padding: 15px 0;
+    text-align: center;
+    z-index: 10;
 }
 
-/* 矢印ボタン（右下に固定） */
+/* 矢印ボタン（スクロールエリア内の右下に配置） */
 #modal-jump-btn {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    /* 決定ボタンエリアの上に来るように調整 */
+    bottom: 100px; 
+    right: 20px;
     z-index: 4000;
-    width: 60px; height: 60px; border-radius: 50%;
-    background: var(--accent-color); color: white; font-size: 1.5rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 3px solid white;
-    cursor: pointer; display: none; align-items: center; justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 3px solid white;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
     animation: bounce 2s infinite;
 }
 
@@ -355,26 +381,31 @@ body.modal-open {
 .dialogue-name { font-size: 0.85rem; color: #666; display: block; margin-bottom: 2px; }
 .dialogue-text { font-size: 1.1rem; font-weight: bold; color: #333; }
 
-/* スマホ対応（修正版） */
+/* スマホ対応 */
 @media (max-width: 768px) {
-    #game-container { padding: 20px; width: 100%; border-radius: 15px; }
-    h1 { font-size: 2em; }
-    .card { width: 80px; height: 120px; margin-right: -35px; }
-    #player-hand { height: 180px; padding: 10px 20px; justify-content: flex-start; }
-    #dialogue { width: 90%; font-size: 1rem; padding: 0; bottom: 100px; }
-    
-    .character-details { flex-direction: column; text-align: center; }
-    
     .modal-content, .character-modal-content {
         width: 100%;
         height: 100%;      /* 全画面 */
-        max-height: 100vh; /* 高さ制限なし */
+        max-height: 100vh;
         border-radius: 0;
         padding: 15px;
     }
     
+    /* スマホだとプロフは縦並び＆さらにコンパクトに */
+    .character-details {
+        flex-direction: column;
+        text-align: center;
+        max-height: 250px; /* スマホなら少し縦長でもOK */
+    }
+    
+    /* 決定ボタンエリアが隠れないように */
+    .selected-characters {
+        padding-bottom: 20px; /* 下に余裕を持たせる */
+    }
+    
+    /* 矢印ボタンの位置調整 */
     #modal-jump-btn {
-        bottom: 80px; /* スマホだと少し上に */
+        bottom: 120px; 
         right: 20px;
     }
     .result-row { flex-direction: column; text-align: center; padding: 10px; }
