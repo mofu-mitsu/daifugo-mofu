@@ -132,22 +132,42 @@ function loadCharacterDefinitions() {
 }
 
 // 画像プリロード（キャッシュ用）
+// 強力な画像プリロード（DOMに隠して配置する作戦）
 function preloadCharacterImages() {
-    gameState.players.forEach(p => {
-        if (!p.isHuman) {
-            const char = CHARACTERS[p.character];
-            if (char && char.portrait) {
-                const img = new Image();
-                img.src = char.portrait;
-                // バリエーションもロード（存在すればキャッシュされる、しなければ404だが裏で処理される）
-                const situations = ['start', 'win', 'lose', 'pressure', 'think', 'play', 'pass', 'revolution', 'joker', 'pair', 'stairs', 'single'];
-                situations.forEach(sit => {
-                    const vImg = new Image();
-                    vImg.src = char.portrait.replace('.png', `_${sit}.png`);
-                });
-            }
-        }
+    // 既にプリロード用コンテナがあったら作らない
+    if (document.getElementById('preload-container')) return;
+
+    const preloadContainer = document.createElement('div');
+    preloadContainer.id = 'preload-container';
+    // 画面外に飛ばして見えなくする（でもブラウザには描画させる）
+    preloadContainer.style.position = 'absolute';
+    preloadContainer.style.width = '1px';
+    preloadContainer.style.height = '1px';
+    preloadContainer.style.overflow = 'hidden';
+    preloadContainer.style.opacity = '0';
+    preloadContainer.style.top = '-9999px';
+    preloadContainer.style.left = '-9999px';
+    document.body.appendChild(preloadContainer);
+
+    const situations = ['start', 'win', 'lose', 'pressure', 'think', 'play', 'pass', 'revolution', 'joker', 'pair', 'stairs', 'single'];
+
+    // 全キャラの画像をDOMに追加
+    Object.values(CHARACTERS).forEach(char => {
+        if (!char.portrait) return;
+        
+        // 通常画像
+        const img = document.createElement('img');
+        img.src = char.portrait;
+        preloadContainer.appendChild(img);
+
+        // 差分画像
+        situations.forEach(sit => {
+            const vImg = document.createElement('img');
+            vImg.src = char.portrait.replace('.png', `_${sit}.png`);
+            preloadContainer.appendChild(vImg);
+        });
     });
+    console.log("Images forced preloaded into DOM.");
 }
 
 // ==========================================
