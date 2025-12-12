@@ -2,85 +2,77 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>とりの丘トリ’S大富豪</title>
   
-  <!-- 🚨削除: これが404の元凶だったから消すよ！ -->
-  <!-- <base href="/daifugo/"> -->
-
   <!-- 基本メタ -->
   <meta name="description" content="みりんてゃとクラスメイト達が賑やかに戦う、とりの丘学園の大富豪ゲーム！キャラボイス付き・都落ち・献上・観戦モード搭載。">
   <meta name="theme-color" content="#ffb6d5">
 
-  <!-- Icons（先頭の / を取って相対パスにするのがおすすめ） -->
+  <!-- Icons -->
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
 
-  <!-- OGP（URLは合ってるから、画像がルートにあるか確認してね！） -->
+  <!-- OGP -->
   <meta property="og:title" content="とりの丘トリズ大富豪">
   <meta property="og:description" content="みりんてゃ達と対戦する賑やか大富豪！都落ち・献上・観戦モード搭載。">
   <meta property="og:image" content="https://daifugo-mofu.vercel.app/ogp.png">
   <meta property="og:url" content="https://daifugo-mofu.vercel.app/">
   <meta property="og:type" content="website">
 
-  <!-- Twitter card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="とりの丘トリズ大富豪">
-  <meta property="twitter:description" content="みりんてゃと対戦して学園のトップを目指す大富豪！観戦モードあり。">
-  <meta property="twitter:image" content="https://daifugo-mofu.vercel.app/ogp.png">
-
-  <!-- ★追加: Font Awesome（アイコン用） -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ★追加: BGM切り替えボタン（右上に配置） -->
+    <!-- BGM切り替えボタン -->
     <button id="bgm-toggle" class="bgm-btn">
         <i class="fa-solid fa-volume-xmark"></i>
     </button>
     
-    <!-- ★追加: オーディオタグ（ファイル名は daifugoBGM.ogg） -->
-    <!-- loop属性でループ再生、初期音量はJSで制御 -->
+    <!-- オーディオタグ -->
     <audio id="bgm-audio" src="daifugoBGM.ogg" loop preload="auto"></audio>
 
-    <div id="game-container">
-</head>
-<body>
+    <!-- ゲーム内通知（一番手前に表示） -->
+    <div id="game-notification"></div>
+
+    <!-- メインゲームコンテナ -->
     <div id="game-container">
         <h1>とりの丘トリ’S大富豪</h1>
-    <!-- setup-screen の中身を少し変更 -->
-    <div id="setup-screen">
-        <h2>プレイヤー設定</h2>
         
-        <div class="input-group">
-            <label for="player-name">あなたの名前:</label>
-            <input type="text" id="player-name" placeholder="名前を入力">
+        <!-- セットアップ画面 -->
+        <div id="setup-screen">
+            <h2>プレイヤー設定</h2>
+            
+            <div class="input-group">
+                <label for="player-name">あなたの名前:</label>
+                <input type="text" id="player-name" placeholder="名前を入力">
+            </div>
+
+            <div class="input-group">
+                <label for="player-image">あなたのアイコン:</label>
+                <input type="file" id="player-image" accept="image/*">
+            </div>
+            
+            <button id="show-rules">ルール説明</button>
+            
+            <h3>ゲームモード選択</h3>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <button id="select-characters-btn">対戦相手を選ぶ (通常)</button>
+                <button id="spectator-mode-btn" style="background: linear-gradient(45deg, #FF9800, #F44336);">観戦モードで選ぶ</button>
+            </div>
+
+            <div id="ai-character-selection" style="margin-top: 15px;">
+                <p id="selection-status">まだ選択されていません</p>
+            </div>
+            
+            <button id="start-game">ゲーム開始</button>
         </div>
 
-        <div class="input-group">
-            <label for="player-image">あなたのアイコン:</label>
-            <input type="file" id="player-image" accept="image/*">
-        </div>
-        
-        <button id="show-rules">ルール説明</button>
-        
-        <h3>ゲームモード選択</h3>
-        <!-- ▼ ボタンを並べるコンテナを追加 ▼ -->
-        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <button id="select-characters-btn">対戦相手を選ぶ (通常)</button>
-            <button id="spectator-mode-btn" style="background: linear-gradient(45deg, #FF9800, #F44336);">観戦モードで選ぶ</button>
-        </div>
-
-        <!-- 選択中の表示エリア -->
-        <div id="ai-character-selection" style="margin-top: 15px;">
-            <p id="selection-status">まだ選択されていません</p>
-        </div>
-        
-        <button id="start-game">ゲーム開始</button>
-    </div>
+        <!-- ゲームプレイ画面 -->
         <div id="game-screen" style="display: none;">
             <div id="field"></div>
             <div id="players"></div>
@@ -97,44 +89,41 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>ルール説明</h2>
-        <div id="rule-explanation">
-            <p>・最初に山札の52枚を、選択した人数で均等に配ります。</p>
-            <p>・ゲームは時計回りで進行し、順番にカードを出します。</p>
-            <p>・カードは同じ数字のものを1枚以上まとめて出せます。</p>
-            <p>・場のカードより強いカードのみ出せます。（革命中は強弱が逆転します）</p>
-            <p>・カードの強さは、2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A です。</p>
-            <p>・8を含むカードを出すと、場が流れてリセットされ、同じ枚数のカードが出せます。</p>
-            <p>・同じ数字を4枚出すと「革命」が発生し、カードの強弱が逆転します。</p>
-            <p>・手札をすべて出し切ると上がりとなり、順位（大富豪・富豪・貧民・大貧民）が決定します。</p>
-        
-            <h3>【都落ち】</h3>
-            <p>・前の試合で「大富豪」だったプレイヤーが、次の試合で負けた場合、順位に関係なく自動的に「大貧民」へ落ちます。</p>
-            <p>・強者の緊張感が味わえるスリリングな特別ルールです。</p>
-        
-            <h3>【献上（カード交換）】</h3>
-            <p>・試合開始時、「大貧民」は「大富豪」に最も強いカードを2枚献上します。（富豪↔貧民は1枚）</p>
-            <p>・代わりに弱いカードが返され、格差が生まれる伝統ルールです。</p>
-            <p>・献上のタイミングでキャラクターの掛け合いボイスも再生されます。</p>
-        
-            <h3>【観戦モード】</h3>
-            <p>・プレイヤーが参加せず、NPCキャラ（みりんてゃ達）が自動対戦する試合を観戦できます。</p>
-            <p>・各キャラクターの思考・ボイス・プレイ傾向を眺めながら、学園のカードバトルを楽しめます。</p>
-        </div>
+            <div id="rule-explanation">
+                <p>・最初に山札の52枚を、選択した人数で均等に配ります。</p>
+                <p>・ゲームは時計回りで進行し、順番にカードを出します。</p>
+                <p>・カードは同じ数字のものを1枚以上まとめて出せます。</p>
+                <p>・場のカードより強いカードのみ出せます。（革命中は強弱が逆転します）</p>
+                <p>・カードの強さは、2 < 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A です。</p>
+                <p>・8を含むカードを出すと、場が流れてリセットされ、同じ枚数のカードが出せます。</p>
+                <p>・同じ数字を4枚出すと「革命」が発生し、カードの強弱が逆転します。</p>
+                <p>・手札をすべて出し切ると上がりとなり、順位（大富豪・富豪・貧民・大貧民）が決定します。</p>
+            
+                <h3>【都落ち】</h3>
+                <p>・前の試合で「大富豪」だったプレイヤーが、次の試合で負けた場合、順位に関係なく自動的に「大貧民」へ落ちます。</p>
+            
+                <h3>【献上（カード交換）】</h3>
+                <p>・試合開始時、「大貧民」は「大富豪」に最も強いカードを2枚献上します。（富豪↔貧民は1枚）</p>
+            
+                <h3>【観戦モード】</h3>
+                <p>・プレイヤーが参加せず、NPCキャラ（みりんてゃ達）が自動対戦する試合を観戦できます。</p>
+            </div>
         </div>
     </div>
+
     <!-- キャラクター選択モーダル -->
     <div id="character-modal" class="modal">
-        <!-- ★ここに追加！ワープボタン -->
+        <!-- ワープボタン -->
         <button id="modal-jump-btn"><i class="fa-solid fa-arrow-down"></i></button>
     
         <div class="modal-content character-modal-content">
-            <!-- 中身はそのまま... -->
-        <div class="modal-content character-modal-content">
             <span class="close" id="close-character-modal">&times;</span>
             <h2>キャラクターを選択</h2>
+            
             <div class="character-grid" id="character-grid">
                 <!-- キャラクター一覧はJavaScriptで動的に生成 -->
             </div>
+            
             <div class="character-details" id="character-details">
                 <h3>キャラクタープロフィール</h3>
                 <div class="character-portrait">
@@ -147,6 +136,7 @@
                     <p id="character-description">説明: -</p>
                 </div>
             </div>
+            
             <div class="selected-characters" id="selected-characters">
                 <h3>選択されたキャラクター</h3>
                 <div id="selected-characters-list"></div>
@@ -154,8 +144,6 @@
             </div>
         </div>
     </div>
-    <!-- ゲーム内通知（トースト） -->
-    <div id="game-notification"></div>
 
     <!-- リザルト（結果発表）モーダル -->
     <div id="result-modal" class="modal">
@@ -171,7 +159,7 @@
         </div>
     </div>
 
-    <!-- ↓ここを data から defs に変える！ -->
+    <!-- スクリプト -->
     <script src="asset/characters/character_defs.js"></script>
     <script src="script.js"></script>
 </body>
