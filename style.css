@@ -3,7 +3,6 @@
    ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap');
 
-/* ★追加: これを入れるとサイズ計算が狂わなくなる魔法の呪文 */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -25,14 +24,12 @@ body {
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     margin: 0;
-    /* ★修正: padding: 20px; を削除！これがズレの原因でした */
     padding: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     color: var(--text-color);
-    /* 横スクロール防止 */
     overflow-x: hidden; 
     width: 100%;
 }
@@ -57,7 +54,6 @@ body {
     width: 95%;
     position: relative;
     min-height: 600px; 
-    /* ★追加: 中央揃えを確実にする */
     margin: 20px auto; 
 }
 
@@ -170,16 +166,16 @@ button {
 }
 button:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
 button:active { transform: translateY(-2px); }
-/* ★観戦モードボタン（可愛く修正！） */
+
 #spectator-mode-btn {
     background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-    color: white; /* 文字色を白に */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* 文字を見やすく */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     min-width: 200px;
     border: none;
 }
 #spectator-mode-btn:hover {
-    box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4); /* ピンクの影 */
+    box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
 }
 #start-game, #confirm-characters, #confirm-selection, #next-round-button {
     background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
@@ -216,24 +212,15 @@ button:active { transform: translateY(-2px); }
     background-size: 100% 100%; 
     background-repeat: no-repeat;
     display: inline-block;
-    
-    /* ★修正: カードを重ねる設定 */
-    margin-right: -40px; /* 隣のカードを上に被せる */
-    
+    margin-right: -40px; 
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     transition: all 0.3s ease;
     cursor: pointer;
     border: 1px solid rgba(0,0,0,0.1);
-    
-    /* ★追加: 勝手に縮まないようにする（重要！） */
     flex-shrink: 0; 
 }
-
-/* 最後のカードだけ余白を戻す */
-.card:last-child {
-    margin-right: 20px; 
-}
+.card:last-child { margin-right: 20px; }
 
 .card:hover {
     transform: translateY(-20px) scale(1.1);
@@ -245,7 +232,7 @@ button:active { transform: translateY(-2px); }
     transform: translateY(-30px);
     border: 3px solid var(--accent-color);
     box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
-    z-index: 50; /* 選んだカードを手前に */
+    z-index: 50; 
 }
 
 #player-hand {
@@ -255,25 +242,22 @@ button:active { transform: translateY(-2px); }
     background: rgba(255, 255, 255, 0.5);
     border-radius: 30px;
     display: flex;
-    /* ★修正: 真ん中寄せをやめて、左から並べる（スクロール用） */
     justify-content: flex-start; 
     align-items: center;
-    overflow-x: auto; /* 横スクロール許可 */
+    overflow-x: auto; 
     overflow-y: hidden;
     border: 2px solid white;
-    /* ★追加: スクロールバーを少しオシャレに */
     scrollbar-width: thin;
-    white-space: nowrap; /* 改行禁止 */
+    white-space: nowrap; 
 }
 
 /* =========================================
-   ★ここ修正！通知（トースト）の位置★
+   通知（トースト）
    ========================================= */
 #game-notification {
     position: fixed;
     top: 20px;
     left: 50%;
-    /* 修正：まとめて書くことで位置ずれを防止！ */
     transform: translate(-50%, -100px); 
     background: rgba(255, 80, 80, 0.95);
     color: white;
@@ -288,7 +272,6 @@ button:active { transform: translateY(-2px); }
     white-space: nowrap;
 }
 #game-notification.show {
-    /* 修正：まとめて書く！ */
     transform: translate(-50%, 0);
 }
 
@@ -312,13 +295,13 @@ button:active { transform: translateY(-2px); }
 .result-title { font-weight: bold; }
 
 /* =========================================
-   ★追加: BGMボタンのデザイン
+   BGMボタン
    ========================================= */
 .bgm-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10001; /* 最前面に */
+    z-index: 10001; 
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -331,28 +314,53 @@ button:active { transform: translateY(-2px); }
     align-items: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transition: all 0.3s;
-    padding: 0; /* paddingリセット */
+    padding: 0; 
     margin: 0;
 }
-
 .bgm-btn:hover {
     transform: scale(1.1);
     background: #f0f7ff;
     color: #6e8efb;
     border-color: #6e8efb;
 }
-
 .bgm-btn.playing {
     color: #ff6b6b;
     border-color: #ff6b6b;
     background: #fff0f0;
     animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
     100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+/* =========================================
+   ★追加: 下にワープするボタン（決定へ）
+   ========================================= */
+#modal-jump-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 4000; /* モーダルより上 */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    border: 3px solid white;
+    cursor: pointer;
+    display: none; /* 初期は非表示 */
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+    60% {transform: translateY(-5px);}
 }
 
 /* =========================================
@@ -368,7 +376,6 @@ button:active { transform: translateY(-2px); }
     backdrop-filter: blur(8px);
 }
 
-/* モーダル基本デザイン（キャラ選択以外も共通） */
 .modal-content, .character-modal-content {
     background: rgba(255, 255, 255, 0.98);
     margin: 3% auto;
@@ -381,16 +388,14 @@ button:active { transform: translateY(-2px); }
     animation: slideDown 0.4s ease;
     border: 1px solid white;
     max-height: 85vh;
-    overflow-y: auto;
+    overflow-y: auto; /* ★修正: 自然なスクロールに戻す */
 }
 
-/* モーダル表示アニメ */
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-50px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* 閉じるボタン */
 .close {
     color: #aaa;
     float: right;
@@ -405,41 +410,22 @@ button:active { transform: translateY(-2px); }
 .close:hover { color: #ff6b6b; }
 
 /* =========================================
-   キャラ選択モーダル専用（スクロール調整）
+   キャラ選択モーダル
    ========================================= */
-
-/* モーダル全体をスクロールさせず、中身だけ操作 */
-.character-modal-content {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0;
-    overflow: hidden;  /* 全体スクロール禁止 */
-    max-height: 85vh;  /* 元の高さ制限も維持 */
-}
-
-/* キャラ一覧部分だけスクロール */
+/* ★修正: 元に戻す（特殊な固定を解除） */
 #character-grid {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-bottom: 100px;
-    max-height: 60vh;
+    overflow: visible;
+    padding-bottom: 30px;
 }
 
-/* 決定ボタンエリアを下に固定！ */
+/* ★修正: 元に戻す */
 .selected-characters {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(5px);
-    border-top: 2px solid #eee;
-    padding: 15px;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-    z-index: 10;
-    margin-top: auto;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    position: static;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 15px 0;
+    margin-top: 20px;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -510,7 +496,6 @@ button:active { transform: translateY(-2px); }
 }
 
 @keyframes popInStable {
-    /* translateでまとめて指定することでズレを防ぐ */
     0% { transform: translate(-50%, 0) scale(0.8); opacity: 0; }
     100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
@@ -571,17 +556,15 @@ button:active { transform: translateY(-2px); }
     #game-container { padding: 20px; width: 100%; border-radius: 15px; }
     h1 { font-size: 2em; }
     
-    /* スマホでのカードサイズ調整 */
     .card { 
-        width: 80px;  /* 少し大きくしたよ */
+        width: 80px; 
         height: 120px; 
-        margin-right: -35px; /* 重なり具合調整 */
+        margin-right: -35px; 
     }
     
     #player-hand { 
         height: 180px; 
         padding: 10px 20px; 
-        /* スマホでもスクロールしやすく */
         justify-content: flex-start; 
     }
     
@@ -593,4 +576,7 @@ button:active { transform: translateY(-2px); }
     .result-row { flex-direction: column; text-align: center; padding: 10px; }
     .result-name { padding: 5px 0; font-size: 1.1rem; }
     .result-title { margin-top: 5px; color: #6e8efb; }
+
+    /* ★追加: スマホの時だけワープボタンの位置を調整（少し上に） */
+    #modal-jump-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.2rem; }
 }
