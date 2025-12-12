@@ -344,28 +344,32 @@ html.modal-open, body.modal-open {
 /* =========================================
    ★スマホ対応（タイトル見切れ絶対直す版）
    ========================================= */
+/* =========================================
+   ★スマホ対応（タイトル位置＆間隔 最終調整版）
+   ========================================= */
 @media (max-width: 768px) {
     /* === ①全体レイアウト === */
     html, body {
         height: 100%;
-        overflow-x: hidden;
+        /* スクロールは自然に任せる */
     }
     
     #game-container { 
-        /* ★ここ重要！上を150px空けて、強制的に下に下げる */
-        padding-top: 150px !important;
+        /* ★ここ修正: 上の余白を「100px」にして、少し下げる */
+        /* ※ここを増やすと、全体がもっと下に下がるよ！ */
+        padding-top: 100px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
         padding-bottom: 50px !important;
         
         width: 100%;
-        min-height: 100dvh; /* 100vh ではなく 100dvh にしてアドレスバー対策 */
+        min-height: 100dvh; /* 画面の高さ確保 */
         
         border-radius: 0;
         border: none;
         margin: 0;
         
-        /* 中身を強制的に「上詰め」にする（中央寄せさせない） */
+        /* 上から順に並べる */
         display: flex !important;
         flex-direction: column !important;
         justify-content: flex-start !important; 
@@ -373,19 +377,21 @@ html.modal-open, body.modal-open {
     }
 
     h1 { 
-        /* タイトル文字の設定 */
-        font-size: 1.8em; 
-        margin-top: 0 !important;    /* 上のマージンはゼロ（paddingで調整するため） */
-        margin-bottom: 30px !important;
-        line-height: 1.2;
-        flex-shrink: 0; /* 潰れないようにする */
+        /* ★ここ修正: タイトルの「上」に余裕を持たせる */
+        margin-top: 30px !important; 
         
-        /* 念のため手前に表示 */
+        /* ★ここ修正: タイトルと下の「プレイヤー設定」の間隔 */
+        /* ここを広げすぎると間延びするから、20pxくらいが丁度いいかも */
+        margin-bottom: 20px !important;
+        
+        font-size: 1.8em; 
+        line-height: 1.2;
+        flex-shrink: 0;
         position: relative;
         z-index: 10;
     }
     
-    /* === ②モーダル（キャラ選択など） === */
+    /* === ②モーダル（中身） === */
     .modal {
         padding: 0 !important;
         align-items: flex-start !important;
@@ -402,15 +408,15 @@ html.modal-open, body.modal-open {
         left: 0 !important;
         border: none !important;
         
-        /* モーダルの中も上を空ける */
-        padding-top: 100px !important;
+        /* モーダルの中もタイトルと被らないように上を空ける */
+        padding-top: 120px !important;
         padding-bottom: 150px !important; 
         
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
     }
     
-    /* === ③ボタン類の位置調整 === */
+    /* === ③ボタン類 === */
     .close {
         position: fixed !important;
         top: 20px !important;
@@ -426,12 +432,13 @@ html.modal-open, body.modal-open {
         display: block !important;
     }
 
+    /* 矢印ボタンの位置 */
     #modal-jump-btn { 
         top: 100px !important; 
         right: 20px !important;
     }
     
-    /* === ④カード・パーツ調整 === */
+    /* === ④カード・パーツ === */
     .card { width: 80px; height: 120px; margin-right: -35px; }
     #player-hand { height: 180px; padding: 10px 20px; justify-content: flex-start; }
     #dialogue { width: 95%; bottom: 80px; }
