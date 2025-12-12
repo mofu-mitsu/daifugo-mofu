@@ -1451,15 +1451,17 @@ function startBgm() {
     }
 }
 
-
 // ==========================================
-// ★修正: 決定ボタンへワープ＆矢印ボタン制御
+// ★修正: 決定ボタンへワープ＆強力なスクロールロック
 // ==========================================
 const jumpBtn = document.getElementById('modal-jump-btn');
 
 if (jumpBtn) {
-    jumpBtn.onclick = () => {
-        // ★修正: スマホで全画面化している「.character-modal-content」をスクロールさせる
+    jumpBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // ★内側の箱をスクロールさせる
         const modalContent = document.querySelector('.character-modal-content');
         if (modalContent) {
             modalContent.scrollTo({
@@ -1470,29 +1472,31 @@ if (jumpBtn) {
     };
 }
 
-// モーダルを開く時の処理
+// モーダルを開く
 const originalOpenCharacterModal = openCharacterModal;
 openCharacterModal = function(isSpectator) {
     originalOpenCharacterModal(isSpectator);
     
-    // 背景固定
+    // ★最強のロック: htmlとbody両方にクラスをつける
+    document.documentElement.classList.add('modal-open');
     document.body.classList.add('modal-open');
     
-    // ★修正: 強制的に表示させる（important付きでstyle操作）
+    // 矢印を表示
     if (jumpBtn) {
         jumpBtn.style.setProperty('display', 'flex', 'important');
     }
 };
 
-// モーダルを閉じる時の処理
+// モーダルを閉じる
 const originalCloseCharacterModalFunc = closeCharacterModalFunc;
 closeCharacterModalFunc = function() {
     originalCloseCharacterModalFunc();
     
-    // 背景固定解除
+    // ロック解除
+    document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
     
-    // 非表示にする
+    // 矢印を非表示
     if (jumpBtn) {
         jumpBtn.style.display = 'none';
     }
