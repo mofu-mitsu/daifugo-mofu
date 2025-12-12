@@ -18,21 +18,23 @@
     --shadow-strong: 0 25px 50px rgba(0,0,0,0.3);
 }
 
-/* ★重要: 二重スクロール防止の基本設定 */
+/* ★重要: htmlとbodyの初期設定 */
 html, body {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* 横スクロール防止 */
+    overflow-x: hidden;
 }
 
-/* ★重要: モーダルが開いている時は、背景（body）のスクロールを完全に止める */
-body.modal-open, html.modal-open {
+/* ★重要: モーダルが開いている時は、外側を完全に固定して動かなくする */
+html.modal-open, body.modal-open {
     overflow: hidden !important;
-    height: 100% !important;
-    position: fixed; /* スマホで裏側が動くのを強力に防ぐ */
+    height: 100dvh !important; /* 画面の高さに固定 */
+    position: fixed;
     width: 100%;
+    top: 0;
+    left: 0;
 }
 
 body {
@@ -192,14 +194,14 @@ button:active { transform: translateY(-2px); }
 }
 
 /* =========================================
-   モーダル共通（PC版の基本）
+   モーダル共通（PC版は中央寄せ）
    ========================================= */
 .modal {
     display: none; position: fixed; z-index: 3000; left: 0; top: 0;
     width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
-    /* PCでは中央寄せ */
     justify-content: center; align-items: center;
+    overflow: hidden; 
 }
 .modal[style*="display: block"] { display: flex !important; }
 
@@ -211,17 +213,18 @@ button:active { transform: translateY(-2px); }
     box-shadow: var(--shadow-strong); position: relative;
     border: 1px solid white; animation: slideDown 0.4s ease;
     
-    /* ★重要: 内側だけスクロール */
+    /* 中身のスクロール許可 */
     overflow-y: auto; display: block; 
     scrollbar-width: thin; scrollbar-color: #cbaaca #f1f1f1;
 }
 
 @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* 閉じるボタン */
+/* 閉じるボタン（左上に配置） */
 .close {
     color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer;
-    transition: color 0.3s; position: absolute; left: 20px; top: 15px; z-index: 20000;
+    transition: color 0.3s; 
+    position: absolute; left: 20px; top: 15px; z-index: 20000;
 }
 .close:hover { color: #ff6b6b; }
 
@@ -230,6 +233,7 @@ button:active { transform: translateY(-2px); }
    ========================================= */
 .character-modal-content > h2 { margin-top: 10px; margin-bottom: 10px; text-align: center; }
 
+/* プロフエリア */
 .character-details {
     margin: 10px 0; display: flex; align-items: center; gap: 15px;
     background: #f8f9fa; border-radius: 20px; padding: 10px; border: 2px solid #eee;
@@ -326,17 +330,16 @@ button:active { transform: translateY(-2px); }
     
     .character-details { flex-direction: column; text-align: center; }
     
-    /* モーダルを「画面上端」から配置し、余白を消す */
+    /* モーダルを「画面上端」から配置 */
     .modal {
         align-items: flex-start !important; 
         padding: 0 !important;
     }
 
     /* 白い箱を全画面化（100dvhでアドレスバー対策） */
-    /* 背景（body）のスクロールは見えないように被せる */
     .modal-content, .character-modal-content {
         width: 100% !important; 
-        height: 100dvh !important; /* dVHを使うことでアドレスバーの変化に対応 */
+        height: 100dvh !important; /* dVHでアドレスバー対策 */
         max-width: none !important;
         max-height: none !important;
         margin: 0 !important;
@@ -346,7 +349,9 @@ button:active { transform: translateY(-2px); }
         
         /* BGMボタンなどと被らないように上だけ少し開ける */
         padding-top: 80px !important; 
-        padding-bottom: 100px !important; /* 下も余裕を持たせる */
+        
+        /* 下の余白を多めに取って、決定ボタンが見切れないようにする */
+        padding-bottom: 120px !important; 
         
         animation: none;
     }
@@ -359,8 +364,8 @@ button:active { transform: translateY(-2px); }
     
     /* ★矢印ボタン（スマホ：右上のBGMボタンの下に配置！） */
     #modal-jump-btn { 
-        bottom: auto !important; /* 下基準を解除 */
-        left: auto !important;   /* 左基準を解除 */
+        bottom: auto !important; /* 下基準解除 */
+        left: auto !important;   /* 左基準解除 */
         
         top: 90px !important;    /* 上から90px（BGMボタンの下） */
         right: 20px !important;  /* 右から20px */
