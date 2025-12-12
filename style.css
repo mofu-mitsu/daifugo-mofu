@@ -180,7 +180,7 @@ button:active { transform: translateY(-2px); }
 }
 
 /* =========================================
-   モーダル共通（スマホ対応完全版）
+   モーダル共通（PC版の基本設定）
    ========================================= */
 .modal {
     display: none; position: fixed; z-index: 3000; left: 0; top: 0;
@@ -189,38 +189,28 @@ button:active { transform: translateY(-2px); }
     justify-content: center; align-items: center;
     overflow: hidden; 
 }
-body.modal-open { overflow: hidden; position: fixed; width: 100%; }
+body.modal-open { overflow: hidden; position: fixed; width: 100%; } 
 .modal[style*="display: block"] { display: flex !important; }
 
-/* モーダルの箱 */
+/* モーダルの箱（PC版） */
 .modal-content, .character-modal-content {
     background: rgba(255, 255, 255, 0.98); 
     margin: 0; padding: 20px; border-radius: 20px;
-    width: 95%; max-width: 1000px; 
-    
-    /* ★重要: 高さ制限（スマホのアドレスバー対策で少し余裕を持たせる） */
-    height: auto; max-height: 85vh; 
-    
+    width: 95%; max-width: 1000px; height: 95vh; 
     box-shadow: var(--shadow-strong); position: relative;
-    border: 1px solid white; 
-    
-    /* アニメーション */
-    animation: slideDown 0.4s ease;
-    
-    /* 中身のスクロール許可 */
+    border: 1px solid white; animation: slideDown 0.4s ease;
     overflow-y: auto; display: block; 
     scrollbar-width: thin; scrollbar-color: #cbaaca #f1f1f1;
 }
 
-/* PCのみアニメーション */
-@media (min-width: 769px) {
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-}
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* 閉じるボタン */
+/* 閉じるボタン（共通：左上に配置） */
 .close {
     color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer;
-    transition: color 0.3s; position: absolute; left: 20px; top: 15px; z-index: 100;
+    transition: color 0.3s; 
+    position: absolute; left: 20px; top: 15px; 
+    z-index: 20000; /* 最前面に */
 }
 .close:hover { color: #ff6b6b; }
 
@@ -229,7 +219,7 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
    ========================================= */
 .character-modal-content > h2 { margin-top: 10px; margin-bottom: 10px; text-align: center; }
 
-/* プロフ */
+/* プロフエリア */
 .character-details {
     margin: 10px 0; display: flex; align-items: center; gap: 15px;
     background: #f8f9fa; border-radius: 20px; padding: 10px; border: 2px solid #eee;
@@ -237,7 +227,7 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
 .character-portrait img { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #a777e3; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 #character-description { white-space: pre-wrap; line-height: 1.5; font-size: 0.95rem; }
 
-/* キャラ一覧（親のスクロールに任せる） */
+/* キャラ一覧（親スクロールに任せる） */
 #character-grid { overflow: visible; height: auto; padding: 0; }
 .character-section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
 
@@ -250,11 +240,10 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
 .character-card.selected { border-color: #a777e3; background: #fbf5ff; transform: scale(1.02); box-shadow: 0 5px 15px rgba(167, 119, 227, 0.4); }
 .character-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 5px; border: 3px solid #eee; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
-/* 決定ボタンエリア（固定解除、下に配置） */
+/* 決定ボタンエリア */
 .selected-characters {
     position: static; 
     background: transparent; border: none; box-shadow: none;
-    /* ★下にたっぷりと余白を持たせる（これで見切れない！） */
     padding: 20px 0 100px 0; 
     margin-top: 10px; text-align: center; border-top: 2px dashed #ddd;
 }
@@ -277,12 +266,11 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
     transition: all 0.3s;
 }
 
-/* ★矢印ボタン（画面左下に最強固定） */
+/* ★矢印ボタン（PC版初期値） */
 #modal-jump-btn {
-    position: fixed; /* 画面に対して固定 */
-    bottom: 20px; 
-    left: 20px;
-    z-index: 99999; /* 最前面 */
+    position: fixed; 
+    bottom: 30px; left: 30px; /* 左下に配置 */
+    z-index: 10005; 
     width: 60px; height: 60px; border-radius: 50%;
     background: var(--accent-color); color: white; font-size: 1.5rem;
     box-shadow: 0 5px 20px rgba(0,0,0,0.4); border: 3px solid white;
@@ -316,7 +304,7 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
 .dialogue-text { font-size: 1.1rem; font-weight: bold; color: #333; }
 
 /* =========================================
-   スマホ対応（崩れ防止・最適化）
+   ★スマホ対応（ここを抜本修正！）
    ========================================= */
 @media (max-width: 768px) {
     #game-container { padding: 20px; width: 100%; border-radius: 15px; }
@@ -327,10 +315,26 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
     
     .character-details { flex-direction: column; text-align: center; }
     
-    /* モーダルの高さを制限し、アニメーションを削除（不具合回避） */
+    /* モーダルのコンテナ自体を上詰めにする */
+    .modal {
+        align-items: flex-start; /* これで上部の謎の空間が消える！ */
+        padding: 0;
+    }
+
+    /* 白い箱を全画面化（アプリ風） */
     .modal-content, .character-modal-content {
-        width: 100%; height: auto; max-height: 85vh; /* 85%に制限 */
-        border-radius: 0; padding: 15px; margin: 0;
+        width: 100vw !important; /* 幅最大 */
+        height: 100vh !important; /* 高さ最大 */
+        max-width: none !important;
+        max-height: none !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        top: 0; left: 0;
+        
+        /* BGMボタン(右上)と被らないように少し上を開ける */
+        padding-top: 60px !important; 
+        
+        /* アニメーションなしでパッと表示 */
         animation: none;
     }
     
@@ -338,6 +342,14 @@ body.modal-open { overflow: hidden; position: fixed; width: 100%; }
     .character-section-grid {
         grid-template-columns: repeat(2, 1fr); 
         gap: 10px;
+    }
+    
+    /* 矢印ボタン（左下・最強固定） */
+    #modal-jump-btn { 
+        position: fixed !important;
+        bottom: 20px !important; 
+        left: 20px !important;
+        z-index: 2147483647 !important; /* z-index最大値 */
     }
     
     .result-row { flex-direction: column; text-align: center; padding: 10px; }
