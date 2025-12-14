@@ -952,20 +952,20 @@ function checkTriangleEvents() {
 }
 
 // ==========================================
-// カード交換
+// カード交換（ゆっくり進行版）
 // ==========================================
 function performCardExchange() {
     gameState.isTalking = true;
-    const playersByRank = {};
     
+    const playersByRank = {};
     gameState.players.forEach(p => {
         const r = gameState.prevRanks[p.id];
         if (r !== undefined) playersByRank[r] = p;
     });
 
-    let timeline = 0;
+    let exchanges = []; 
 
-    const processExchange = (winnerRank, loserRank, count) => {
+    const prepareExchange = (winnerRank, loserRank, count) => {
         const winner = playersByRank[winnerRank];
         const loser = playersByRank[loserRank];
         if (!winner || !loser) return;
@@ -976,53 +976,73 @@ function performCardExchange() {
         const giveToLoser = winner.hand.slice(0, count);
         const giveToWinner = loser.hand.slice(loser.hand.length - count);
 
-        exchangeCards(winner, loser, giveToLoser, giveToWinner);
-        sortHand(winner.hand);
-        sortHand(loser.hand);
-
-        if (winner.isHuman) {
-            const cardNames = giveToWinner.map(c => getCardNameJP(c)).join('」と「');
-            setTimeout(() => {
-                showNotification(`${loser.name}から「${cardNames}」を献上されました！`);
-            }, timeline + 1000);
-            timeline += 4000;
-        } else if (loser.isHuman) {
-            const cardNames = giveToWinner.map(c => getCardNameJP(c)).join('」と「');
-            setTimeout(() => {
-                showNotification(`${winner.name}に「${cardNames}」を没収されました…`);
-            }, timeline + 1000);
-            timeline += 4000;
-        }
-
-        if (!winner.isHuman) {
-            setTimeout(() => {
-                const char = CHARACTERS[winner.character];
-                showDialogue(winner.name, getRandomDialogue(char, 'tributeReceive', winner), winner.character, 'win');
-            }, timeline);
-            timeline += 3000;
-        }
-        if (!loser.isHuman) {
-            setTimeout(() => {
-                const char = CHARACTERS[loser.character];
-                showDialogue(loser.name, getRandomDialogue(char, 'tributeGive', loser), loser.character, 'lose');
-            }, timeline);
-            timeline += 3000;
-        }
+        exchanges.push({
+            winner: winner,
+            loser: loser,
+            toLoser: giveToLoser,
+            toWinner: giveToWinner
+        });
     };
 
-    updateGameDisplay();
-    processExchange(0, 3, 2);
-    processExchange(1, 2, 1);
+    prepareExchange(0, 3, 2);
+    prepareExchange(1, 2, 1);
 
+    // -------------------------------------------------
+    // タイムライン構築（1人ずつ順番に！）
+    // -------------------------------------------------
+    let timeline = 500; 
+
+    // 1. 渡す側のセリフ（1人ずつ）
+    exchanges.forEach(ex => {
+        setTimeout(() => {
+            if (!ex.loser.isHuman) {
+                const char = CHARACTERS[ex.loser.character];
+                showDialogue(ex.loser.name, getRandomDialogue(char, 'tributeGive', ex.loser), ex.loser.character, 'lose');
+            } else {
+                const cardNames = ex.toWinner.map(c => getCardNameJP(c)).join('」と「');
+                showNotification(`大富豪へ「${cardNames}」を献上します…`);
+            }
+        }, timeline);
+        timeline += 4000; // ★次の人のために4秒あける
+    });
+
+    // 2. カード移動 & 画面更新
     setTimeout(() => {
-        showNotification("都落ち/カード交換が行われました");
+        exchanges.forEach(ex => {
+            exchangeCards(ex.winner, ex.loser, ex.toLoser, ex.toWinner);
+            sortHand(ex.winner.hand);
+            sortHand(ex.loser.hand);
+        });
+        
+        updateGameDisplay(); 
+        showNotification("カードが交換されました");
+        
+    }, timeline);
+
+    timeline += 2000; // 画面が変わってから2秒待つ
+
+    // 3. 貰う側のセリフ（1人ずつ）
+    exchanges.forEach(ex => {
+        setTimeout(() => {
+            if (!ex.winner.isHuman) {
+                const char = CHARACTERS[ex.winner.character];
+                showDialogue(ex.winner.name, getRandomDialogue(char, 'tributeReceive', ex.winner), ex.winner.character, 'win');
+            } else {
+                const cardNames = ex.toWinner.map(c => getCardNameJP(c)).join('」と「');
+                showNotification(`${ex.loser.name}から「${cardNames}」を受け取りました！`);
+            }
+        }, timeline); 
+        timeline += 4000; // ★次の人のために4秒あける
+    });
+
+    // 4. ゲーム開始
+    setTimeout(() => {
+        showNotification("都落ち/カード交換 終了");
         
         setTimeout(() => {
              gameState.isTalking = false;
              gameState.isExchanging = false; 
              
-             // ★ここ修正！ 
-             // ただ声を出すだけじゃなく、イベント抽選を行ってから開始する！
              if (!checkTriangleEvents()) {
                  playStartVoices(); 
              }
@@ -1030,9 +1050,9 @@ function performCardExchange() {
              showNotification(`第${gameState.round}回戦 スタート！`);
              updateGameDisplay(); 
 
-        }, 2500); 
+        }, 2000); 
         
-    }, timeline + 1000);
+    }, timeline);
 }
 
 function getCardNameJP(card) {
@@ -1546,7 +1566,8 @@ function advanceTurn() {
 }
 
 function aiTurn() {
-    if (gameState.isProcessing || gameState.isTalking || gameState.isGameEnded) return;
+    // ★ここ修正！「gameState.isExchanging」を追加して、交換中は絶対動かないようにする！
+    if (gameState.isProcessing || gameState.isTalking || gameState.isGameEnded || gameState.isExchanging) return;
 
     const aiPlayer = gameState.players[gameState.currentPlayerIndex];
     if (gameState.finishedPlayers.includes(gameState.currentPlayerIndex)) {
