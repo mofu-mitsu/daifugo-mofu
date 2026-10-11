@@ -2180,7 +2180,7 @@ const CHARACTER_LIST = [
     "id": "wataru",
     "name": "わたる",
     "MBTI": "ISTJ",
-    "enneagram": "1w9",
+    "enneagram": "8w9",
     "profile": "君国 航（くんこく わたる）\n厳格で屈強かつ慎重。完璧主義者",
     "gender": "男",
     "portrait": "images/characters/wataru.png",
